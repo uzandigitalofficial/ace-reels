@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src 'self'; img-src 'self' data:">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex">
+<title>Voice and music picks</title>
+<style>
+:root{--bg:#0d0c0b;--card:#171513;--line:#2a2622;--text:#f1ece4;--muted:#a59c90;--accent:#e2b866;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#2a2217 0,transparent 60%),var(--bg);color:var(--text);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 0 120px}
+.wrap{max-width:1100px;margin:0 auto;padding:40px 20px}
+h1{font:700 clamp(34px,6vw,64px)/1.02 Georgia,"Times New Roman",serif;letter-spacing:-.02em;margin:0 0 12px}
+h2{font:600 13px/1 ui-sans-serif,system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:48px 0 16px}
+.lead{color:var(--muted);max-width:640px;margin:0}
+.rec{margin-top:24px;padding:16px 18px;border:1px solid #4a3d26;background:linear-gradient(180deg,#221c13,#19150f);border-radius:14px;max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:linear-gradient(180deg,#1b1916,var(--card));border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease)}
+.card:hover{transform:translateY(-2px);border-color:#3b342c;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.card header{display:flex;gap:10px;align-items:baseline}
+.tag{font:700 13px/1 ui-monospace,Consolas,monospace;color:#120f0a;background:var(--accent);padding:5px 7px;border-radius:6px;white-space:nowrap}
+h3{font-size:16px;margin:0;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card p.lic{font-size:12px} .card a{color:var(--accent)}
+audio{width:100%;height:40px}
+.pick{align-self:flex-start;background:transparent;color:var(--text);border:1px solid #4a4239;border-radius:10px;padding:8px 12px;font:600 13px/1 inherit;cursor:pointer;transition:background .25s var(--ease),border-color .25s var(--ease)}
+.pick:hover{border-color:var(--accent)} .pick:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pick[aria-pressed=true]{background:var(--accent);color:#120f0a;border-color:var(--accent)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(13,12,11,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:12px 20px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.bar b{color:var(--accent)}
+.bar button{background:var(--accent);color:#120f0a;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+.bar button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.card{opacity:0;transform:translateY(10px);animation:in .6s var(--ease) forwards}
+@keyframes in{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.card{animation:none;opacity:1;transform:none;transition:none}}
+</style></head><body>
+<main class="wrap">
+<h1>Pick a voice<br>and a sound.</h1>
+<p class="lead">Every clip reads the same script and plays at the same loudness (-16 LUFS), so you are only comparing the sound. Tap Pick on one voice and one music option, then Copy and send it back.</p>
+<div class="rec"><b>Recommendation:</b> V1 (Microsoft Ava Multilingual) over M1 (Gymnopedie No 1) with light sound design. Ava speaks at a natural 177 words a minute with a warm, varied pitch, a transcription check caught every word, it is free with no key and takes seconds on the server. The current Chatterbox voice (V9) rushes at 234 words a minute, which is a big part of why it sounds made. If you want even more human, the next step is Google&#x27;s Gemini voice (free key, 5 minutes to set up).</div>
+<h2>Mixes: best 3 voices over the best music</h2>
+<section class="grid"><article class="card" data-kind="mix" data-id="MIX1">
+  <header><span class="tag">MIX1</span><h3>V1 over M1</h3></header>
+  <p>Voice on top, music about 24 dB under, light sound design.</p>
+  <audio controls preload="none" src="mix/MIX1.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick MIX1</button>
+</article>
+<article class="card" data-kind="mix" data-id="MIX2">
+  <header><span class="tag">MIX2</span><h3>V12 over M1</h3></header>
+  <p>Voice on top, music about 24 dB under, light sound design.</p>
+  <audio controls preload="none" src="mix/MIX2.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick MIX2</button>
+</article>
+<article class="card" data-kind="mix" data-id="MIX3">
+  <header><span class="tag">MIX3</span><h3>V2 over M1</h3></header>
+  <p>Voice on top, music about 24 dB under, light sound design.</p>
+  <audio controls preload="none" src="mix/MIX3.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick MIX3</button>
+</article></section>
+<h2>Voices</h2>
+<section class="grid"><article class="card" data-kind="voice" data-id="V1">
+  <header><span class="tag">V1</span><h3>Microsoft Ava Multilingual (edge-tts)</h3></header>
+  <p>US, warm and expressive, the most natural Microsoft voice. Free, no key, runs anywhere.</p>
+  <audio controls preload="none" src="voice/V1.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V1</button>
+</article>
+<article class="card" data-kind="voice" data-id="V2">
+  <header><span class="tag">V2</span><h3>Microsoft Emma Multilingual (edge-tts)</h3></header>
+  <p>US, bright, clear and chatty. Free, no key.</p>
+  <audio controls preload="none" src="voice/V2.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V2</button>
+</article>
+<article class="card" data-kind="voice" data-id="V3">
+  <header><span class="tag">V3</span><h3>Microsoft Ava (edge-tts)</h3></header>
+  <p>Same speaker as V1, older model, a touch flatter.</p>
+  <audio controls preload="none" src="voice/V3.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V3</button>
+</article>
+<article class="card" data-kind="voice" data-id="V4">
+  <header><span class="tag">V4</span><h3>Microsoft Jenny (edge-tts)</h3></header>
+  <p>US, friendly and even, classic assistant style.</p>
+  <audio controls preload="none" src="voice/V4.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V4</button>
+</article>
+<article class="card" data-kind="voice" data-id="V5">
+  <header><span class="tag">V5</span><h3>Microsoft Aria (edge-tts)</h3></header>
+  <p>US, confident newsreader style.</p>
+  <audio controls preload="none" src="voice/V5.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V5</button>
+</article>
+<article class="card" data-kind="voice" data-id="V6">
+  <header><span class="tag">V6</span><h3>Microsoft Sonia (edge-tts)</h3></header>
+  <p>British, polished and calm.</p>
+  <audio controls preload="none" src="voice/V6.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V6</button>
+</article>
+<article class="card" data-kind="voice" data-id="V7">
+  <header><span class="tag">V7</span><h3>Microsoft Libby (edge-tts)</h3></header>
+  <p>British, soft and young.</p>
+  <audio controls preload="none" src="voice/V7.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V7</button>
+</article>
+<article class="card" data-kind="voice" data-id="V8">
+  <header><span class="tag">V8</span><h3>Microsoft Leah (edge-tts)</h3></header>
+  <p>South African English, local accent.</p>
+  <audio controls preload="none" src="voice/V8.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V8</button>
+</article>
+<article class="card" data-kind="voice" data-id="V9">
+  <header><span class="tag">V9</span><h3>Chatterbox, current settings</h3></header>
+  <p>What the reels use now (exaggeration 0.62, cfg 0.42). For comparison.</p>
+  <audio controls preload="none" src="voice/V9.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V9</button>
+</article>
+<article class="card" data-kind="voice" data-id="V10">
+  <header><span class="tag">V10</span><h3>Chatterbox, calm</h3></header>
+  <p>Exaggeration 0.40, cfg 0.50: steadier, less sing-song.</p>
+  <audio controls preload="none" src="voice/V10.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V10</button>
+</article>
+<article class="card" data-kind="voice" data-id="V11">
+  <header><span class="tag">V11</span><h3>Chatterbox, warm and slow</h3></header>
+  <p>Exaggeration 0.30, cfg 0.30, temperature 0.60: slowest and softest Chatterbox.</p>
+  <audio controls preload="none" src="voice/V11.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V11</button>
+</article>
+<article class="card" data-kind="voice" data-id="V12">
+  <header><span class="tag">V12</span><h3>Chatterbox Turbo</h3></header>
+  <p>Resemble&#x27;s newer, faster model with its built-in voice.</p>
+  <audio controls preload="none" src="voice/V12.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V12</button>
+</article>
+<article class="card" data-kind="voice" data-id="V13">
+  <header><span class="tag">V13</span><h3>Kokoro, Heart</h3></header>
+  <p>The current backup voice. Tiny, fast, clean, slightly smooth.</p>
+  <audio controls preload="none" src="voice/V13.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V13</button>
+</article>
+<article class="card" data-kind="voice" data-id="V14">
+  <header><span class="tag">V14</span><h3>Kokoro, Bella</h3></header>
+  <p>Kokoro&#x27;s other top US female voice, a bit brighter.</p>
+  <audio controls preload="none" src="voice/V14.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V14</button>
+</article>
+<article class="card" data-kind="voice" data-id="V15">
+  <header><span class="tag">V15</span><h3>Kokoro, Nicole</h3></header>
+  <p>Breathy, close-mic, slow. Intimate, not for every reel.</p>
+  <audio controls preload="none" src="voice/V15.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V15</button>
+</article>
+<article class="card" data-kind="voice" data-id="V16">
+  <header><span class="tag">V16</span><h3>Kokoro, Emma (British)</h3></header>
+  <p>British Kokoro voice, crisp.</p>
+  <audio controls preload="none" src="voice/V16.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick V16</button>
+</article></section>
+<h2>Music and sound</h2>
+<section class="grid"><article class="card" data-kind="music" data-id="M1">
+  <header><span class="tag">M1</span><h3>Gymnopedie No 1</h3></header>
+  <p>Satie&#x27;s soft solo piano. About one note a second, calm and elegant.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M1.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M1</button>
+</article>
+<article class="card" data-kind="music" data-id="M2">
+  <header><span class="tag">M2</span><h3>Sincerely</h3></header>
+  <p>Slow, warm and low. Almost nothing in the voice range.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M2.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M2</button>
+</article>
+<article class="card" data-kind="music" data-id="M3">
+  <header><span class="tag">M3</span><h3>Lightless Dawn</h3></header>
+  <p>Very slow ambient piano and texture, reflective.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M3.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M3</button>
+</article>
+<article class="card" data-kind="music" data-id="M4">
+  <header><span class="tag">M4</span><h3>Windswept</h3></header>
+  <p>Airy, even ambient bed with very steady level.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M4.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M4</button>
+</article>
+<article class="card" data-kind="music" data-id="M5">
+  <header><span class="tag">M5</span><h3>Fresh Air</h3></header>
+  <p>The sparsest track tested: long soft tones, hardly any attacks.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M5.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M5</button>
+</article>
+<article class="card" data-kind="music" data-id="M6">
+  <header><span class="tag">M6</span><h3>Perspectives</h3></header>
+  <p>Gentle, even, slightly more motion. Keeps a reel moving.</p><p class="lic">CC-BY 4.0 . Kevin MacLeod . <a href="https://incompetech.com/music/royalty-free/music.html">source</a></p>
+  <audio controls preload="none" src="music/M6.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick M6</button>
+</article>
+<article class="card" data-kind="music" data-id="Sound design only">
+  <header><span class="tag">Sound design only</span><h3>No music, sound design only (with V1)</h3></header>
+  <p>Soft whoosh in, page flip, a pop on the turn, a gentle riser and click into the call to action.</p><p class="lic">Made here, no licence needed</p>
+  <audio controls preload="none" src="music/M_sfx.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick Sound design only</button>
+</article>
+<article class="card" data-kind="music" data-id="No music">
+  <header><span class="tag">No music</span><h3>No music, voice only (V1)</h3></header>
+  <p>Just the voice. Clean and direct.</p><p class="lic">Made here, no licence needed</p>
+  <audio controls preload="none" src="music/M_none.mp3"></audio>
+  <button class="pick" type="button" aria-pressed="false">Pick No music</button>
+</article></section>
+<p class="lead" style="margin-top:40px;font-size:13px">Music: Kevin MacLeod (incompetech.com), Creative Commons Attribution 4.0, credit goes in the caption. Sound effects: Kenney and starninjas (CC0) plus a whoosh and riser made here. <a style="color:var(--accent)" href="LICENCES.md">Every source and licence</a>.</p>
+</main>
+<div class="bar" role="status" aria-live="polite"><span>Voice: <b id="pv">none</b></span><span>Music: <b id="pm">none</b></span><button id="copy" type="button">Copy my pick</button></div>
+<script>
+(() => {
+  const picks = {voice: null, music: null};
+  const show = () => { document.getElementById('pv').textContent = picks.voice || 'none'; document.getElementById('pm').textContent = picks.music || 'none'; };
+  document.querySelectorAll('.card').forEach((c, i) => {
+    c.style.animationDelay = Math.min(i * 40, 600) + 'ms';
+    const kind = c.dataset.kind === 'mix' ? 'voice' : c.dataset.kind, b = c.querySelector('.pick');
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.card[data-kind="' + c.dataset.kind + '"]').forEach(o => { o.classList.remove('on'); o.querySelector('.pick').setAttribute('aria-pressed', 'false'); });
+      c.classList.add('on'); b.setAttribute('aria-pressed', 'true'); picks[kind] = c.dataset.id; show();
+    });
+  });
+  document.querySelectorAll('audio').forEach(a => a.addEventListener('play', () => document.querySelectorAll('audio').forEach(o => { if (o !== a) o.pause(); })));
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    const t = 'My pick: voice ' + (picks.voice || '?') + ', music ' + (picks.music || '?');
+    try { await navigator.clipboard.writeText(t); btn.textContent = 'Copied'; } catch (e) { btn.textContent = t; }
+    setTimeout(() => btn.textContent = 'Copy my pick', 1800);
+  });
+})();
+</script>
+</body></html>
