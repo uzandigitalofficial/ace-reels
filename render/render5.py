@@ -135,7 +135,7 @@ def main():
     base = f"https://{owner.lower()}.github.io/{rn}/reels/"
     caption = s["caption"].strip() + "\n\n" + " ".join(s.get("hashtags", []))
     meta = {"id": s["id"], "brand": a.brand, "file": mp4.name, "video_url": base + mp4.name, "cover_url": base + cover.name,
-            "caption": caption, "v": 2, "engine": 5, "seconds": total, "made": stamp}
+            "caption": caption, "v": 2, "engine": 5, "test": os.environ.get("REEL_TEST") == "true", "seconds": total, "made": stamp}
     (out / f"{name}.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(meta, ensure_ascii=False))
 

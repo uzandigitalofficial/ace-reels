@@ -56,6 +56,7 @@ jobs:
         if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
         env:
           SLOT: ${{ steps.due.outputs.slot }}
+          REEL_TEST: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.post == 'no' }}
         run: python render/render5.py --brand stolenvalour ${{ github.event.inputs.id && format('--id {0}', github.event.inputs.id) || '' }}
       - name: Publish to gallery
         if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
