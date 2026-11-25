@@ -54,4 +54,27 @@ gh-pages feed.xml to @stolenvalour.co.za. Test renders (workflow_dispatch with p
 Sources: github.com/tungs/timecut, github.com/tungs/timesnap, replit.com/blog/browsers-dont-want-to-be-cameras, groups.google.com/a/chromium.org/g/headless-dev (BeginFrameControl threads), posthog.com/blog/multimodal-models-need-video.
 
 ## Report
-(Write the result here when done: what changed, what is now usable, what is still weak.)
+Done 25 Nov 2026. Commits 05ee2ad and bf1a9fa on main.
+
+What changed
+- capture/virtual.cjs (new): in-memory upgrade of timecut's virtual clock. CSS transitions, CSS animations and element.animate are seeked to virtual time every frame. Three timeweb bugs are fixed: play() Promise, rAF isolation, video seek stall. The screenshot clip now follows the scroll. No node_modules files were edited.
+- capture/capture.cjs: 12 s takes, 1 s hold then gentle cubic ease over up to 3.4 screens. The scroll is relative to where the page parks itself (obsidian sits at y=100000). Intros are stepped frame by frame. x264 is capped at 4.5 Mbps. `--force` parks old takes in tmp/retakes instead of overwriting.
+- stolenvalour.co.za: the loader and logo now finish at about 5 s virtual. Recording starts at 7 s on the 3D hero. No change to the site.
+- Tools: capture/sheet.cjs (contact sheets), capture/probe.cjs and capture/dbg.cjs (debugging a site under virtual time), capture/promote.cjs (swap in new takes, park old ones).
+- clips.json can now list several windows per clip. render5.py picks a window long enough for the beat. Only that hunk was committed: render5.py also holds another session's uncommitted Engine 6 work, which I left untouched in the working tree.
+- Replaced clips are in assets/clips_old/2026-11-25-v1/. Nothing was deleted.
+
+What is now usable (8 clips, all 12 s at 30 fps, 1.4 to 4.0 Mbps)
+- stolenvalour mobile, all 12 s: 3D SV hero, WORKS scene, Fouché Motors case card.
+- stolenvalour desktop, 0 to 8.8 s. After that the site's own "Layer over layer" text overlaps the card.
+- saxonwold mobile and desktop, all 12 s: hero, product grid and category cards all reveal properly (v1 had about 3 s).
+- kingdomshine mobile 0 to 5.5 s and 6.7 to 12 s; desktop 0 to 5 s and 8.3 to 12 s. The gaps are dark half-revealed sections between chapters.
+- obsidian mobile: castle hero 0 to 5 s and the Gold chapter 5.8 to 7.8 s. obsidian desktop: castle 0 to 5 s, then Gold and Chrome 5.8 to 10 s.
+- Test render sv-006 (post=no) ran twice. The second take shows the obsidian castle on the phone and the Kingdom Shine operations page on the laptop, 20.5 s at 3.7 Mbps, no blank or loading frames.
+
+What is still weak
+- Still only 4 sites, so the variety problem is better (about 4x more usable seconds) but not solved. More sites are the real fix.
+- Obsidian's chapter changes pass through near-black and its Chrome chapter is dark. Those parts are excluded.
+- WebGL video textures on stolenvalour are seeked without waiting, so their pixels can lag a frame or two. This is invisible in the contact sheets.
+- The capture depends on timecut 0.3.3 and timeweb's exact source. virtual.cjs throws a clear error if an upgrade breaks a patch.
+- A capture takes 2 to 6 minutes per clip on this laptop. One stolenvalour desktop run crashed Chrome once and passed on retry.
