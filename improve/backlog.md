@@ -26,3 +26,8 @@ Ranked, highest value first. One item per night. Each line: the change, then how
 - [ ] Icon grid: only show icons that match the words, fill the rest with one big explanatory icon. Verify: icon scene stills read as one idea.
 - [ ] qa.py: add a loudness check (voice integrated loudness between -18 and -12 LUFS on the final mix). Verify: qa json "lufs" on three previews.
 - [ ] qa.py: flag text smaller than 22 px at 1080 width as a soft penalty. Verify: soft item appears, score unchanged on current previews.
+
+## From Uwais's Instagram shares, 25 Nov (see briefs/ig-ideas-25nov.md)
+- [ ] 3D hero shots via Blender (Uwais asked: "What if we used Astra in blender..."): render a website-on-laptop or phone turn once on the laptop, cache as a short clip in assets/3d/, use as one scene type. Never render Blender inside the daily Action. Verify: one test reel with the clip, qa PASS, looks premium against rules.md.
+- [ ] Sound design that never sounds cheap: at most 3 subtle real foley hits per reel (paper, pen, soft click), low level under the voice, no stock bleeps. Verify: by ear on the preview and voice still clearly on top.
+- [ ] Later, after Instagram posting is stable: reformat each reel for YouTube Shorts and TikTok with its own hook, caption and cover text.
