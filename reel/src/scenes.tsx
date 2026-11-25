@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, Img, OffthreadVideo, interpolate, staticFile, useCurrentFrame } from 'remotion';
-import { C, COND, Cross, Head, Icon, Obj, Pill, Pin, SANS, SERIF, Stamp, Tape, Tick, clamp, ease, halftone, lerp, plain, useSpring } from './kit';
+import { C, COND, Cross, Head, Icon, Obj, Pill, Pin, SANS, SERIF, Stamp, Tape, Tick, clamp, ease, halftone, lerp, plain, useBeatDelay, useBlink, useSpring } from './kit';
 import { Ctx } from './types';
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -63,7 +63,7 @@ export const CaseFile: React.FC<{ c: Ctx }> = ({ c }) => {
 };
 
 const Seal: React.FC<{ x: number; y: number; delay: number }> = ({ x, y, delay }) => {
-  const p = useSpring(delay, 'pop');
+  const p = useSpring(useBeatDelay(delay, 5), 'pop');
   return (
     <div style={{ position: 'absolute', left: x - 72, top: y - 72, width: 144, height: 144, zIndex: 20, transform: `scale(${1.6 - 0.6 * p}) rotate(${-12 + 12 * p}deg)`, opacity: interpolate(p, [0, 0.3], [0, 1], clamp) }}>
       <div style={{ position: 'absolute', inset: -8, borderRadius: '46% 54% 50% 50%', background: C.wax, boxShadow: '0 6px 14px rgba(10,18,38,.35)' }} />
@@ -102,7 +102,7 @@ export const Checklist: React.FC<{ c: Ctx }> = ({ c }) => {
   return (
     <AbsoluteFill>
       <Top c={c} />
-      <Obj x={80} y={620} w={920} h={h} rot={-1.2} delay={6} radius={40} style={{ background: C.card }}>
+      <Obj x={80} y={620} w={920} h={h} rot={-1.2} delay={6} radius={40} beat style={{ background: C.card }}>
         <div style={{ padding: '58px 50px 30px' }}>
           {rows.map((r, k) => {
             const d = 14 + k * 8;
@@ -136,6 +136,7 @@ const Row: React.FC<{ delay: number; last: boolean; h: number; children: React.R
 // ---------------------------------------------------------------- Google style search result
 export const Google: React.FC<{ c: Ctx }> = ({ c }) => {
   const f = useCurrentFrame();
+  const blink = useBlink();
   const n = nicheOf(c);
   const q = `${n} near me`;
   const neg = c.s.mood === 'neg';
@@ -145,10 +146,10 @@ export const Google: React.FC<{ c: Ctx }> = ({ c }) => {
   return (
     <AbsoluteFill>
       <Top c={c} />
-      <Obj x={70} y={600} w={940} h={736} rot={0.8} delay={4} radius={40} style={{ background: C.card, overflow: 'hidden' }}>
+      <Obj x={70} y={600} w={940} h={736} rot={0.8} delay={4} radius={40} beat style={{ background: C.card, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', left: 40, top: 40, width: 860, height: 96, borderRadius: 48, border: `2px solid ${C.faint}`, boxShadow: '0 6px 18px rgba(20,33,61,.08)', display: 'flex', alignItems: 'center', padding: '0 34px', gap: 22 }}>
           <Icon name="search" size={42} delay={6} stroke={2.4} />
-          <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 40, color: C.ink, letterSpacing: '-0.02em' }}>{typed(f, q, 10)}<span style={{ color: C.acc, opacity: f % 16 < 8 ? 1 : 0 }}>|</span></div>
+          <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 40, color: C.ink, letterSpacing: '-0.02em' }}>{typed(f, q, 10)}<span style={{ color: C.acc, opacity: blink ? 1 : 0 }}>|</span></div>
         </div>
         <div style={{ position: 'absolute', left: 64, top: 166, display: 'flex', gap: 40, fontFamily: SANS, fontSize: 24, color: C.muted }}>
           <span style={{ color: C.ink, borderBottom: `4px solid ${C.acc}`, paddingBottom: 8 }}>All</span><span>Maps</span><span>Images</span><span>News</span>
@@ -235,7 +236,7 @@ export const WhatsApp: React.FC<{ c: Ctx }> = ({ c }) => {
           </div>
         </div>
       </Obj>
-      {neg ? <Obj x={50} y={1140} w={270} h={180} rot={-7} delay={38} radius={4} z={60} style={{ background: C.sticky, padding: '24px 26px' }}>
+      {neg ? <Obj x={50} y={1140} w={270} h={180} rot={-7} delay={38} radius={4} z={60} beat style={{ background: C.sticky, padding: '24px 26px' }}>
         <div style={{ fontFamily: SANS, fontWeight: 700, fontSize: 22, color: 'rgba(20,33,61,.6)', letterSpacing: '0.1em' }}>MEANWHILE</div>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 44, color: C.ink, letterSpacing: '-0.03em', lineHeight: 1 }}>4 hours<br />later</div>
       </Obj> : <Stamp text="ANSWERED" x={90} y={1130} delay={52} rot={-9} color={C.ink} size={44} />}
@@ -244,7 +245,7 @@ export const WhatsApp: React.FC<{ c: Ctx }> = ({ c }) => {
 };
 
 const Bubble: React.FC<{ side: 'in' | 'out'; delay: number; time?: string; dark?: boolean; children: React.ReactNode }> = ({ side, delay, time, dark, children }) => {
-  const p = useSpring(delay, 'pop');
+  const p = useSpring(useBeatDelay(delay, 4, true), 'pop');
   const out = side === 'out';
   return (
     <div style={{ alignSelf: out ? 'flex-end' : 'flex-start', maxWidth: 430, transformOrigin: out ? 'right bottom' : 'left bottom', transform: `scale(${0.7 + 0.3 * p}) translateY(${(1 - p) * 20}px)`, opacity: interpolate(p, [0, 0.3], [0, 1], clamp),
@@ -380,7 +381,7 @@ export const BeforeAfter: React.FC<{ c: Ctx }> = ({ c }) => {
 // ---------------------------------------------------------------- price card
 // Prices are never rolled or counted: only the real figure from the brand file is ever on screen. It slams in instead.
 const Money: React.FC<{ v: string; delay: number; style: React.CSSProperties }> = ({ v, delay, style }) => {
-  const p = useSpring(delay, 'pop');
+  const p = useSpring(useBeatDelay(delay, 5), 'pop');
   return <div style={{ ...style, opacity: interpolate(p, [0, 0.3], [0, 1], clamp), transform: `scale(${1.35 - 0.35 * p}) rotate(${(1 - p) * -4}deg)`, transformOrigin: 'left bottom' }}>{v}</div>;
 };
 
@@ -395,7 +396,7 @@ export const Price: React.FC<{ c: Ctx }> = ({ c }) => {
     return (
       <AbsoluteFill>
         <Top c={c} />
-        <Obj x={100} y={610} w={880} h={700} rot={-1.5} delay={4} radius={44} style={{ background: C.card, padding: '64px 58px' }}>
+        <Obj x={100} y={610} w={880} h={700} rot={-1.5} delay={4} radius={44} beat style={{ background: C.card, padding: '64px 58px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
             <Money v={studio.price} delay={10} style={{ fontFamily: SANS, fontWeight: 900, fontSize: 150, letterSpacing: '-0.06em', color: C.ink, lineHeight: 0.9 }} />
             <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 66, color: C.acc }}>{studio.per}</div>
@@ -508,7 +509,7 @@ export const Footage: React.FC<{ c: Ctx }> = ({ c }) => {
         <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 44, color: C.ink, textAlign: 'center', marginTop: 22 }}>{`your ${nicheOf(c)}`}</div>
       </Obj>
       <Pin x={430} y={662} delay={22} />
-      <Obj x={660} y={760} w={300} h={260} rot={6} delay={20} radius={4} style={{ background: C.sticky, padding: 28 }}>
+      <Obj x={660} y={760} w={300} h={260} rot={6} delay={20} radius={4} beat style={{ background: C.sticky, padding: 28 }}>
         <div style={{ fontFamily: SANS, fontWeight: 700, fontSize: 20, letterSpacing: '0.12em', color: 'rgba(20,33,61,.6)' }}>ON A PHONE</div>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 40, lineHeight: 1.02, letterSpacing: '-0.03em', color: C.ink, marginTop: 12 }}>Fast, clear, one tap to call</div>
       </Obj>
@@ -534,6 +535,7 @@ export const Cta: React.FC<{ c: Ctx }> = ({ c }) => {
   const sentAt = t0 + msg.length * 1.6 + 8;
   const sent = f > sentAt;
   const phone = c.p.brand.phone || '065 027 6518';
+  const blink = useBlink();
   return (
     <AbsoluteFill>
             <Head show={c.s.show} top={252} underline />
@@ -544,7 +546,7 @@ export const Cta: React.FC<{ c: Ctx }> = ({ c }) => {
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 58, letterSpacing: '-0.04em', color: C.ink }}>{c.p.brand.name}</div>
         <div style={{ fontFamily: SANS, fontSize: 26, color: C.muted, marginTop: 6 }}>{wa ? `WhatsApp ${phone}` : c.p.brand.handle || '@stolenvalour.co.za'}</div>
       </div></Fade>
-      <Obj x={90} y={810} w={900} h={380} rot={1.2} delay={16} radius={40} style={{ background: C.card, padding: 34 }}>
+      <Obj x={90} y={810} w={900} h={380} rot={1.2} delay={16} radius={40} beat style={{ background: C.card, padding: 34 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, paddingBottom: 24, borderBottom: `2px solid ${C.faint}` }}>
           <div style={{ width: 64, height: 64, borderRadius: 64, background: C.ink, color: C.cream, fontFamily: SERIF, fontStyle: 'italic', fontSize: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>SV</div>
           <div><div style={{ fontFamily: SANS, fontWeight: 800, fontSize: 30, color: C.ink }}>{wa ? c.p.brand.name : c.p.brand.handle || '@stolenvalour.co.za'}</div>
@@ -554,10 +556,10 @@ export const Cta: React.FC<{ c: Ctx }> = ({ c }) => {
           {sent ? <Bubble side="out" delay={Math.ceil(sentAt)} dark={!wa}><span style={{ fontWeight: 800, fontSize: 38 }}>{msg}</span></Bubble> : null}
         </div>
         <div style={{ height: 80, borderRadius: 40, background: C.cream, display: 'flex', alignItems: 'center', padding: '0 30px', fontFamily: SANS, fontSize: 34, color: C.ink }}>
-          {sent ? <span style={{ opacity: 0.4 }}>Message...</span> : <span>{msg.slice(0, typedN)}<span style={{ color: C.acc, opacity: f % 16 < 8 ? 1 : 0 }}>|</span></span>}
+          {sent ? <span style={{ opacity: 0.4 }}>Message...</span> : <span>{msg.slice(0, typedN)}<span style={{ color: C.acc, opacity: blink ? 1 : 0 }}>|</span></span>}
         </div>
       </Obj>
-      <Obj x={680} y={1100} w={300} h={140} rot={-6} delay={sentAt + 6} radius={4} style={{ background: C.sticky, padding: '22px 26px' }}>
+      <Obj x={680} y={1100} w={300} h={140} rot={-6} delay={sentAt + 6} radius={4} beat style={{ background: C.sticky, padding: '22px 26px' }}>
         <div style={{ fontFamily: SANS, fontWeight: 900, fontSize: 38, lineHeight: 1.02, letterSpacing: '-0.03em', color: C.ink }}>Free, no<br />obligation</div>
       </Obj>
       <Fade delay={sentAt + 2}><div style={{ position: 'absolute', left: 90, top: 1240, fontFamily: SANS, fontWeight: 900, fontSize: wa ? 84 : 110, letterSpacing: '-0.045em', color: C.ink, lineHeight: 1 }}>

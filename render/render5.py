@@ -13,6 +13,7 @@ import numpy as np, soundfile as sf
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "render"))
 import scenes as S  # noqa: E402
+import beats as B  # noqa: E402
 
 REEL = ROOT / "reel"
 PUB = REEL / "public"
@@ -31,7 +32,7 @@ def write_sfx(path, segs, total, sr=44100):
     rng = np.random.default_rng(7)
     out = np.zeros(int((total + 1) * sr), np.float32)
     for i, s in enumerate(segs):
-        cut = max(0.0, s["start"] - 0.12)
+        cut = max(0.0, s.get("cut", s["start"] - 0.12)) if i else 0.0
         if i:
             n = int(0.42 * sr); x = rng.normal(0, 1, n).astype(np.float32)
             env = np.sin(np.linspace(0, np.pi, n)) ** 2.2
@@ -60,6 +61,22 @@ def pick(bank, override):
     day = (now.date() - datetime.date(2026, 11, 25)).days
     slot = int(os.environ.get("SLOT") or (0 if now.hour < 8 else 1 if now.hour < 14 else 2)) % 3
     return bank[(day * 3 + slot) % len(bank)], day, slot
+
+
+def music_for(brand, day, slot, pillar):
+    """The one music entry point: a URL or local file for this reel, or None. Selection lives here only, so a new picker
+    (per pillar, per mood) replaces this function without touching the beat sync or the scenes."""
+    music = brand.get("music") or []
+    if isinstance(music, dict):  # optional {"pain": [...], "value": [...], "default": [...]}
+        music = music.get(pillar) or music.get("default") or []
+    return music[(day * 3 + slot) % len(music)] if music else None
+
+
+def fetch_music(src, dst):
+    if str(src).startswith("http"):
+        urllib.request.urlretrieve(src, dst)
+    else:
+        shutil.copy(ROOT / src if not os.path.isabs(src) else src, dst)
 
 
 # ------------------------------------------------------------------ voice engines
@@ -189,8 +206,15 @@ def tts(texts, brand):
     n = sum(len(w) for w in words)
     secs = sum(len(a) for a in takes) / sr + sum(GAP_SENT for _ in takes[:-1])
     wpm = 60 * n / max(secs, 1e-6)
-    if not WPM_LO <= wpm <= WPM_HI:
+    total_rate = 1.0
+    for _ in range(2):  # a fast take (Chatterbox can read at 190+ wpm) may need a second, smaller pass to reach the range
+        if WPM_LO <= wpm <= WPM_HI:
+            break
         rate = float(np.clip(WPM_GOAL / wpm, 0.86, 1.16))
+        rate = float(np.clip(rate, 0.78 / total_rate, 1.2 / total_rate))
+        if abs(rate - 1) < 0.015:
+            break
+        total_rate *= rate
         print(f"pace {wpm:.0f} wpm, stretching by {rate:.3f}")
         takes = [tidy(a, sr) for a in stretch(takes, sr, rate)]
         words = words_of(takes)
@@ -296,14 +320,27 @@ def main():
         gaps = silences(PUB / "voice.wav", total)
         print(f"voice check: first word at {segs[0]['words'][0]['start'] if segs[0]['words'] else LEAD:.2f} s, longest silence {gaps['longest']:.2f} s "
               f"(at {gaps['at']:.2f} s), tail {TAIL:.2f} s, total {total:.2f} s")
-    write_sfx(PUB / "sfx.wav", segs, total); props["sfx"] = "sfx.wav"
-    music = brand.get("music") or []
-    if music:
-        url = music[(day * 3 + slot) % len(music)]
+    # music, then the beat grid: voice timing stays as it is, only the visual cuts and small accents move onto beats
+    props["beats"], props["musicFrom"] = [], 0.0
+    beat_share, music_src = None, music_for(brand, day, slot, pillar)
+    if music_src:
         try:
-            urllib.request.urlretrieve(url, PUB / "music.mp3"); props["music"] = "music.mp3"
+            fetch_music(music_src, PUB / "music.mp3"); props["music"] = "music.mp3"
         except Exception as e:
             print("music download failed:", e)
+    if props["music"]:
+        try:
+            g = B.grid(music_src, local=PUB / "music.mp3")
+            cta_at = segs[-1]["start"] - B.CUT_LEAD
+            off, drop = B.choose_offset(g, total, cta_at, segs)
+            bts = B.in_reel(g, off, total)
+            beat_share = B.snap_cuts(segs, bts)
+            props["beats"], props["musicFrom"] = bts, off
+            where = f"phrase change at {drop:.2f} s, CTA cut at {cta_at:.2f} s" if drop is not None else "no drop near the CTA, phrase grid used"
+            print(f"beats: {g['tempo']:.0f} bpm, music from {off:.2f} s, {where}, {100 * beat_share:.0f}% of cuts on a beat")
+        except Exception as e:
+            print("beat sync skipped:", repr(e)[:300])
+    write_sfx(PUB / "sfx.wav", segs, total); props["sfx"] = "sfx.wav"
     (ROOT / "tmp").mkdir(exist_ok=True)
     pp = ROOT / "tmp" / "props.json"; pp.write_text(json.dumps(props), encoding="utf-8")
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d-%H%M")
@@ -321,6 +358,21 @@ def main():
             "caption": caption, "v": 2, "engine": 6.1, "test": os.environ.get("REEL_TEST") == "true", "seconds": total, "made": stamp}
     if gaps:
         meta["voice_longest_silence"] = round(gaps["longest"], 3)
+    if beat_share is not None:
+        meta["beat_cuts"] = round(beat_share, 3)
+        meta["music_from"] = props["musicFrom"]
+    # automatic scorecard: a hard fail keeps the reel off the feed and off Instagram, it never stops the workflow
+    try:
+        import qa as Q
+        q = Q.run(mp4, PUB / "voice.wav" if voice_on else None, pp)
+        print(Q.line(q))
+    except Exception as e:
+        q = {"pass": True, "error": repr(e)[:300]}
+        print("qa: skipped,", q["error"])
+    meta["qa"] = q
+    if not q.get("pass", True):
+        meta["qa_fail"] = True
+        print("qa: hard fail, this reel stays off the feed and is not posted")
     (out / f"{name}.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(meta, ensure_ascii=False))
 

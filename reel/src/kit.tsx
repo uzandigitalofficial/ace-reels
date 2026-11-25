@@ -24,6 +24,63 @@ export const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as 
 export const ease = Easing.bezier(0.22, 1, 0.36, 1);
 export const lerp = (f: number, a: number, b: number, from = 0, to = 1) => interpolate(f, [a, b], [from, to], { ...clamp, easing: ease });
 
+// ---------------------------------------------------------------- music beats
+// p.beats holds the music's beat times in reel seconds (render/beats.py). Reel.tsx wraps every scene in BeatCtx with the
+// global frame its Sequence starts on, so components inside a scene can land small accents on the beat. Everything is a
+// no-op when a reel has no music (beats empty), so scenes look exactly as before.
+export const BeatCtx = React.createContext<{ beats: number[]; from: number }>({ beats: [], from: 0 });
+
+/** 0 to 1 pulse that peaks on every beat and fades over `window` seconds. `frame` is the global frame. */
+export const onBeat = (frame: number, fps: number, beats: number[] | undefined, window = 0.18) => {
+  if (!beats || !beats.length) return 0;
+  const t = frame / fps;
+  let lo = 0, hi = beats.length - 1, k = -1;
+  while (lo <= hi) { const m = (lo + hi) >> 1; if (beats[m] <= t + 1e-6) { k = m; lo = m + 1; } else hi = m - 1; }
+  if (k < 0) return 0;
+  const d = t - beats[k];
+  return d > window ? 0 : (1 - d / window) ** 2;
+};
+
+/** Move a local delay (frames) onto the nearest beat within `max` frames. `later` only moves it later (for things that mount
+ *  at their delay, so they never start part way through). */
+export const beatDelay = (delay: number, from: number, fps: number, beats: number[] | undefined, max = 4, later = false) => {
+  if (!beats || !beats.length) return delay;
+  const g = from + delay;
+  let best = delay, bd = max + 0.01;
+  for (const b of beats) {
+    const d = b * fps - g;
+    if (d > max) break;
+    if ((later ? d >= 0 : true) && Math.abs(d) < bd) { bd = Math.abs(d); best = delay + d; }
+  }
+  return best;
+};
+
+export const useBeatDelay = (delay: number, max = 4, later = false) => {
+  const { beats, from } = React.useContext(BeatCtx);
+  const { fps } = useVideoConfig();
+  return beatDelay(delay, from, fps, beats, max, later);
+};
+
+export const useBeatPulse = (window = 0.18) => {
+  const f = useCurrentFrame();
+  const { beats, from } = React.useContext(BeatCtx);
+  const { fps } = useVideoConfig();
+  return onBeat(f + from, fps, beats, window);
+};
+
+/** Text cursor that blinks with the music: on for the first half of every beat, else the steady 16 frame blink. */
+export const useBlink = () => {
+  const f = useCurrentFrame();
+  const { beats, from } = React.useContext(BeatCtx);
+  const { fps } = useVideoConfig();
+  if (!beats.length) return f % 16 < 8;
+  const t = (f + from) / fps;
+  let k = -1;
+  for (let j = 0; j < beats.length && beats[j] <= t; j++) k = j;
+  if (k < 0 || k >= beats.length - 1) return f % 16 < 8;
+  return t - beats[k] < (beats[k + 1] - beats[k]) / 2;
+};
+
 /** Paper drop: a little overshoot, settles like a card landing on a desk. */
 export const useSpring = (delay: number, cfg: 'drop' | 'soft' | 'pop' = 'drop') => {
   const f = useCurrentFrame();
@@ -40,11 +97,15 @@ export const halftone = (alpha = 0.3, size = 8) => ({
 type ObjProps = {
   x: number; y: number; w: number; h?: number; delay?: number; rot?: number; from?: 'top' | 'left' | 'right' | 'bottom';
   dist?: number; radius?: number; dots?: boolean; shadow?: boolean; z?: number; drift?: boolean; style?: React.CSSProperties; children?: React.ReactNode;
+  /** land this card on the nearest music beat (moves its entry by at most 4 frames) */
+  beat?: boolean;
 };
 
 /** Any paper object: drops in with a spring, a settling rotation, a soft shadow and a halftone drop shadow. */
-export const Obj: React.FC<ObjProps> = ({ x, y, w, h, delay = 0, rot = 0, from = 'top', dist = 260, radius = 28, dots = true, shadow = true, z, drift = true, style, children }) => {
+export const Obj: React.FC<ObjProps> = ({ x, y, w, h, delay: d0 = 0, rot = 0, from = 'top', dist = 260, radius = 28, dots = true, shadow = true, z, drift = true, style, children, beat = false }) => {
   const f = useCurrentFrame();
+  const bd = useBeatDelay(d0);
+  const delay = beat ? bd : d0;
   const p = useSpring(delay);
   const lift = 1 - p;
   const l = Math.max(0, lift);
@@ -65,8 +126,8 @@ export const Obj: React.FC<ObjProps> = ({ x, y, w, h, delay = 0, rot = 0, from =
   );
 };
 
-export const Pin: React.FC<{ x: number; y: number; color?: string; delay?: number }> = ({ x, y, color = C.acc, delay = 0 }) => {
-  const p = useSpring(delay, 'pop');
+export const Pin: React.FC<{ x: number; y: number; color?: string; delay?: number }> = ({ x, y, color = C.acc, delay: d0 = 0 }) => {
+  const p = useSpring(useBeatDelay(d0), 'pop');
   return (
     <div style={{ position: 'absolute', left: x - 22, top: y - 22, width: 44, height: 44, transform: `scale(${p}) translateY(${(1 - p) * -30}px)`, zIndex: 30 }}>
       <div style={{ position: 'absolute', left: 22, top: 30, width: 18, height: 10, borderRadius: 10, background: 'rgba(20,33,61,.25)', filter: 'blur(3px)' }} />
@@ -128,8 +189,9 @@ export const Head: React.FC<{ show: string; top: number; size?: number; delay?: 
   );
 };
 
-const Swash: React.FC<{ delay: number }> = ({ delay }) => {
+const Swash: React.FC<{ delay: number }> = ({ delay: d0 }) => {
   const f = useCurrentFrame();
+  const delay = useBeatDelay(d0); // the underline starts drawing on a beat
   const p = interpolate(f - delay, [0, 14], [0, 1], { ...clamp, easing: ease });
   return (
     <svg viewBox="0 0 300 30" preserveAspectRatio="none" style={{ position: 'absolute', left: '-4%', bottom: '-0.12em', width: '108%', height: '0.22em', overflow: 'visible' }}>
@@ -139,8 +201,9 @@ const Swash: React.FC<{ delay: number }> = ({ delay }) => {
 };
 
 /** Green tick circle that pops and draws its check. */
-export const Tick: React.FC<{ size?: number; delay?: number; on?: boolean; color?: string }> = ({ size = 60, delay = 0, on = true, color = C.ink }) => {
+export const Tick: React.FC<{ size?: number; delay?: number; on?: boolean; color?: string }> = ({ size = 60, delay: d0 = 0, on = true, color = C.ink }) => {
   const f = useCurrentFrame();
+  const delay = useBeatDelay(d0, 3);
   const p = useSpring(delay, 'pop');
   const d = interpolate(f - delay - 4, [0, 10], [0, 1], { ...clamp, easing: ease });
   if (!on) return <div style={{ width: size, height: size, borderRadius: size, border: `3px dashed ${C.faint}`, flexShrink: 0 }} />;
@@ -151,8 +214,9 @@ export const Tick: React.FC<{ size?: number; delay?: number; on?: boolean; color
   );
 };
 
-export const Cross: React.FC<{ size?: number; delay?: number }> = ({ size = 60, delay = 0 }) => {
+export const Cross: React.FC<{ size?: number; delay?: number }> = ({ size = 60, delay: d0 = 0 }) => {
   const f = useCurrentFrame();
+  const delay = useBeatDelay(d0, 3);
   const p = useSpring(delay, 'pop');
   const d = interpolate(f - delay - 4, [0, 10], [0, 1], { ...clamp, easing: ease });
   return (
@@ -164,7 +228,7 @@ export const Cross: React.FC<{ size?: number; delay?: number }> = ({ size = 60, 
 
 /** Rubber stamp that thumps down. */
 export const Stamp: React.FC<{ text: string; x: number; y: number; delay: number; color?: string; rot?: number; size?: number }> = ({ text, x, y, delay, color = C.acc, rot = -10, size = 40 }) => {
-  const p = useSpring(delay, 'pop');
+  const p = useSpring(useBeatDelay(delay, 5), 'pop'); // the stamp thumps down on a beat
   return (
     <div style={{ position: 'absolute', left: x, top: y, zIndex: 40, opacity: interpolate(p, [0, 0.3], [0, 0.95], clamp), transform: `rotate(${rot}deg) scale(${2.2 - 1.2 * p})`,
       border: `5px solid ${color}`, borderRadius: 14, padding: '6px 18px', color, fontFamily: COND, fontSize: size, letterSpacing: '0.06em', whiteSpace: 'nowrap', mixBlendMode: 'multiply' }}>{text}</div>

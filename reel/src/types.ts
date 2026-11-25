@@ -4,6 +4,8 @@ export type Seg = {
   kind: 'hook' | 'line' | 'cta'; show: string; say: string; start: number; end: number; words: Word[];
   scene: SceneName; mood: 'neg' | 'pos'; n?: number;
   clip: string | null; clipFrom?: number;
+  /** when this scene appears (s); snapped onto a music beat when one is within 0.12 s of the voice cue */
+  cut?: number;
 };
 export type Plan = { name: string; price: string; per: string; items: string[]; note: string };
 export type ReelProps = {
@@ -14,5 +16,9 @@ export type ReelProps = {
   brand: { name: string; url: string; contact: string; accent: string; phone?: string; handle?: string };
   plans?: Plan[];
   segs: Seg[];
+  /** beat times of the music in reel seconds (render/beats.py) */
+  beats?: number[];
+  /** where the music track starts playing, in track seconds */
+  musicFrom?: number;
 };
 export type Ctx = { s: Seg; p: ReelProps; len: number; i: number };

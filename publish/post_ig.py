@@ -8,6 +8,9 @@ metas = sorted(glob.glob("out/*.json"))
 if not metas:
     sys.exit("no reel rendered")
 meta = json.load(open(metas[-1], encoding="utf-8"))
+if meta.get("qa_fail"):
+    print("not posting: qa hard fail:", "; ".join((meta.get("qa") or {}).get("hard", [])), "| reel stays on the gallery:", meta["video_url"])
+    sys.exit(0)
 if not tok or not uid:
     print("Instagram not connected yet (IG_TOKEN / IG_USER_ID secrets missing). Reel is on the gallery:", meta["video_url"])
     sys.exit(0)
