@@ -12,17 +12,11 @@
   {"name": "Showroom", "price": "R5,000", "per": "a month", "note": "For dealerships and bigger businesses.",
    "items": ["Hosting included", "Monthly report", "Month to month", "One month's notice to stop"]}
  ],
- "tts": {"engine": "chatterbox", "chatterbox": {"exaggeration": 0.62, "cfg_weight": 0.42, "temperature": 0.75, "seed": 7}},
+ "tts": {"engine": "chatterbox", "chatterbox": {"exaggeration": 0.4, "cfg_weight": 0.5, "temperature": 0.7, "seed": 7}},
  "voice": "af_heart",
  "lang": "a",
- "music": [
-  "https://assets.mixkit.co/music/744/744.mp3",
-  "https://assets.mixkit.co/music/770/770.mp3",
-  "https://assets.mixkit.co/music/162/162.mp3",
-  "https://assets.mixkit.co/music/160/160.mp3",
-  "https://assets.mixkit.co/music/161/161.mp3",
-  "https://assets.mixkit.co/music/130/130.mp3"
- ],
+ "music": ["assets/music/lightless-dawn.mp3"],
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
  "shots": ["https://stolenvalour.co.za"],
  "colors": {"paper": "#F2EBDD", "ink": "#14213D", "acc": "#14213D", "soft": "#3A4A6B", "card": "#FFFFFF", "cream": "#FBF7EE", "acc2": "#3A4A6B"},
  "canvas": {"bg": "#F2EBDD", "glow1": "rgba(20,33,61,0)", "glow2": "rgba(20,33,61,0)", "dot": "#14213D"}

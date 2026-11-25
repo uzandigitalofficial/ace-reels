@@ -3,6 +3,8 @@ Needs repo secrets IG_TOKEN and IG_USER_ID. Without them it exits cleanly (reel 
 IG_GRAPH_HOST: graph.instagram.com (Instagram Login, default) or graph.facebook.com (Facebook Login)."""
 import glob, json, os, sys, time, urllib.error, urllib.parse, urllib.request
 
+from credit import with_credit  # appends the brand's music credit as the last lines of the caption
+
 tok, uid = os.environ.get("IG_TOKEN", "").strip(), os.environ.get("IG_USER_ID", "").strip()
 metas = sorted(glob.glob("out/*.json"))
 if not metas:
@@ -42,7 +44,7 @@ for i in range(60):  # wait for GitHub Pages to serve the file
 else:
     sys.exit("video never became public on Pages")
 
-c = call("POST", f"/{uid}/media", {"media_type": "REELS", "video_url": meta["video_url"], "caption": meta["caption"],
+c = call("POST", f"/{uid}/media", {"media_type": "REELS", "video_url": meta["video_url"], "caption": with_credit(meta),
                                     "share_to_feed": "true", "cover_url": meta["cover_url"]})
 cid = c["id"]
 for i in range(60):

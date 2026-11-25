@@ -2,6 +2,8 @@
 import datetime, email.utils, glob, json, os, sys
 from xml.sax.saxutils import escape
 
+from credit import with_credit
+
 site = sys.argv[1]
 repo = os.environ.get("GITHUB_REPOSITORY", "uzandigitalofficial/ace-reels")
 owner, name = repo.split("/")
@@ -14,7 +16,7 @@ for m in items:
     when = datetime.datetime.strptime(m["made"], "%Y%m%d-%H%M").replace(tzinfo=datetime.timezone.utc)
     size = os.path.getsize(os.path.join(site, "reels", m["file"]))
     out.append(f"""<item><title>{escape(m['id'])}</title><link>{escape(m['video_url'])}</link><guid isPermaLink="false">{escape(m['file'])}</guid>
-<pubDate>{email.utils.format_datetime(when)}</pubDate><description>{escape(m['caption'])}</description>
+<pubDate>{email.utils.format_datetime(when)}</pubDate><description>{escape(with_credit(m))}</description>
 <enclosure url="{escape(m['video_url'])}" length="{size}" type="video/mp4"/></item>""")
 feed = f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"><channel><title>Stolen Valour reels</title><link>{base}</link><description>Finished reels ready to post</description>

@@ -79,6 +79,27 @@ def fetch_music(src, dst):
         shutil.copy(ROOT / src if not os.path.isabs(src) else src, dst)
 
 
+def loop_music(path, need, xfade=2.0):
+    """Make sure the track plays for `need` seconds: when it is shorter, repeat it with a short crossfade, never silence."""
+    def dur(p):
+        return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=nw=1:nk=1", str(p)],
+                                    capture_output=True, text=True, check=True).stdout.strip())
+    d = dur(path)
+    if d >= need:
+        return d
+    reps = int((need - xfade) // (d - xfade)) + 1          # copies needed, each overlapping the last by xfade
+    tmp = pathlib.Path(path).with_suffix(".loop.mp3")
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for _ in range(reps):
+        cmd += ["-i", str(path)]
+    f, last = [], "[0:a]"
+    for k in range(1, reps):
+        f.append(f"{last}[{k}:a]acrossfade=d={xfade}:c1=tri:c2=tri[x{k}]"); last = f"[x{k}]"
+    subprocess.run(cmd + ["-filter_complex", ";".join(f), "-map", last, "-b:a", "192k", str(tmp)], check=True)
+    os.replace(tmp, path)
+    return dur(path)
+
+
 # ------------------------------------------------------------------ voice engines
 # Each engine takes (texts, cfg) and returns (list of mono float32 takes, sample rate). Nothing else in the pipeline
 # knows which engine ran: trimming, pacing and word timing are shared, so a new voice drops in as one function here
@@ -340,6 +361,11 @@ def main():
             print(f"beats: {g['tempo']:.0f} bpm, music from {off:.2f} s, {where}, {100 * beat_share:.0f}% of cuts on a beat")
         except Exception as e:
             print("beat sync skipped:", repr(e)[:300])
+    if props["music"]:  # the track must run to the last frame; if not, repeat it with a crossfade
+        try:
+            print(f"music runs {loop_music(PUB / 'music.mp3', props['musicFrom'] + total + 1):.1f} s for a {total:.1f} s reel (from {props['musicFrom']:.2f} s)")
+        except Exception as e:
+            print("music loop skipped:", repr(e)[:300])
     write_sfx(PUB / "sfx.wav", segs, total); props["sfx"] = "sfx.wav"
     (ROOT / "tmp").mkdir(exist_ok=True)
     pp = ROOT / "tmp" / "props.json"; pp.write_text(json.dumps(props), encoding="utf-8")
@@ -356,6 +382,8 @@ def main():
     caption = s["caption"].strip() + "\n\n" + " ".join(s.get("hashtags", []))
     meta = {"id": s["id"], "brand": a.brand, "file": mp4.name, "video_url": base + mp4.name, "cover_url": base + cover.name,
             "caption": caption, "v": 2, "engine": 6.1, "test": os.environ.get("REEL_TEST") == "true", "seconds": total, "made": stamp}
+    if brand.get("music_credit") and props["music"]:
+        meta["music_credit"] = brand["music_credit"]  # post_ig.py and feed.py append it to the caption
     if gaps:
         meta["voice_longest_silence"] = round(gaps["longest"], 3)
     if beat_share is not None:

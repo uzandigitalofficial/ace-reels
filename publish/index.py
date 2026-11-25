@@ -1,12 +1,14 @@
 """Write the gallery page: newest reels first, each with its caption and a copy button (for posting by hand until Instagram is connected)."""
 import glob, html, json, os, sys
 
+from credit import with_credit
+
 site = sys.argv[1]
 items = [json.load(open(p, encoding="utf-8")) for p in glob.glob(os.path.join(site, "reels", "*.json"))]
 items.sort(key=lambda m: m["made"], reverse=True)
 cards = []
 for m in items:
-    cap = html.escape(m["caption"])
+    cap = html.escape(with_credit(m))
     cards.append(f"""<article><video src="reels/{m['file']}" poster="reels/{m['file'][:-4]}.jpg" controls preload="none" playsinline></video>
 <div class="meta"><b>{html.escape(m['id'])}</b> · {m['seconds']}s · {m['made']} UTC · <a href="reels/{m['file']}" download>download</a></div>
 <pre>{cap}</pre><button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='Copied'">Copy caption</button></article>""")
