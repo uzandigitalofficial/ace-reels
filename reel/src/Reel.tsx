@@ -46,7 +46,7 @@ const Scene: React.FC<{ s: Seg; p: ReelProps; len: number; first: boolean }> = (
   return (
     <AbsoluteFill>
       {clip ? (
-        <AbsoluteFill style={{ transform: `scale(${(full ? 1.04 : 1.3) * push + (1 - enter) * 0.12})`, filter: full ? `brightness(.68) saturate(1.15) blur(${(1 - enter) * 16}px)` : 'blur(36px) brightness(.42) saturate(1.4)' }}>
+        <AbsoluteFill style={{ transform: `scale(${(full ? 1.22 : 1.3) * push + (1 - enter) * 0.12})`, filter: full ? `brightness(.46) saturate(1.2) blur(${7 + (1 - enter) * 14}px)` : 'blur(36px) brightness(.42) saturate(1.4)' }}>
           <OffthreadVideo src={clip} startFrom={from} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </AbsoluteFill>
       ) : null}
