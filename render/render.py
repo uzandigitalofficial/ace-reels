@@ -18,6 +18,18 @@ def pick(bank, override):
     return bank[(day * 3 + slot) % len(bank)], day, slot
 
 
+import re
+DIG = "oh one two three four five six seven eight nine".split()
+
+
+def speakable(t):
+    t = re.sub(r"\b0(\d{2}) ?(\d{3}) ?(\d{4})\b", lambda m: ", ".join(" ".join(DIG[int(c)] for c in g) for g in (("0" + m.group(1)), m.group(2), m.group(3))), t)
+    t = re.sub(r"R ?(\d[\d,]*)", lambda m: m.group(1).replace(",", "") + " rand", t)
+    t = re.sub(r"US\$ ?(\d+)", r"\1 US dollars", t)
+    t = t.replace("stolenvalour.co.za", "stolen valour dot co dot za").replace(".co.za", " dot co dot za")
+    return t
+
+
 def tts(texts, voice, lang):
     from kokoro import KPipeline
     pipe = KPipeline(lang_code=lang)
@@ -78,7 +90,7 @@ def main():
     out = ROOT / a.out; out.mkdir(exist_ok=True)
     tmp = ROOT / "tmp"; tmp.mkdir(exist_ok=True)
     segs = [s["hook"]] + s["lines"] + [s["cta"]]
-    audio = tts([g["say"] for g in segs], brand.get("voice", "af_heart"), brand.get("lang", "a"))
+    audio = tts([speakable(g["say"]) for g in segs], brand.get("voice", "af_heart"), brand.get("lang", "a"))
     t, chunks, tl = LEAD, [np.zeros(int(LEAD * SR), np.float32)], []
     for g, au in zip(segs, audio):
         d = len(au) / SR
