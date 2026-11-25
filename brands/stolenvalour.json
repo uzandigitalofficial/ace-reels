@@ -3,7 +3,16 @@
  "url": "stolenvalour.co.za",
  "contact": "WHATSAPP 065 027 6518",
  "contact_short": "WhatsApp 065 027 6518",
- "accent": "#B8F2D6",
+ "accent": "#14213D",
+ "phone": "065 027 6518",
+ "handle": "@stolenvalour.co.za",
+ "plans": [
+  {"name": "Studio", "price": "R2,000", "per": "a month", "note": "No setup fee. Month to month.",
+   "items": ["Hosting included", "WhatsApp and call buttons", "Up to 5 changes a month", "One-page monthly report", "Domain in your name", "Built in 7 days"]},
+  {"name": "Showroom", "price": "R5,000", "per": "a month", "note": "For dealerships and bigger businesses.",
+   "items": ["Hosting included", "Monthly report", "Month to month", "One month's notice to stop"]}
+ ],
+ "tts": {"engine": "chatterbox", "chatterbox": {"exaggeration": 0.62, "cfg_weight": 0.42, "temperature": 0.75, "seed": 7}},
  "voice": "af_heart",
  "lang": "a",
  "music": [
@@ -15,6 +24,6 @@
   "https://assets.mixkit.co/music/130/130.mp3"
  ],
  "shots": ["https://stolenvalour.co.za"],
- "colors": {"ink": "#f1ece2", "acc": "#9fd3bf", "acc2": "#cfc6b6"},
- "canvas": {"bg": "#07080b", "glow1": "rgba(24,96,74,.55)", "glow2": "rgba(214,204,186,.10)", "dot": "#d9efe6"}
+ "colors": {"paper": "#F2EBDD", "ink": "#14213D", "acc": "#14213D", "soft": "#3A4A6B", "card": "#FFFFFF", "cream": "#FBF7EE", "acc2": "#3A4A6B"},
+ "canvas": {"bg": "#F2EBDD", "glow1": "rgba(20,33,61,0)", "glow2": "rgba(20,33,61,0)", "dot": "#14213D"}
 }

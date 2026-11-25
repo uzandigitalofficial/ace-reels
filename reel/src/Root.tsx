@@ -3,9 +3,9 @@ import { Composition } from 'remotion';
 import { Reel, ReelProps } from './Reel';
 
 const demo: ReelProps = {
-  fps: 30, total: 6, voice: null, music: null,
-  brand: { name: 'Stolen Valour', url: 'stolenvalour.co.za', contact: 'WhatsApp 065 027 6518', accent: '#B8F2D6' },
-  segs: [{ kind: 'hook', show: 'Your website is losing you clients', say: 'Your website is losing you clients', start: 0.3, end: 3, words: [], clip: null, device: 'full' }],
+  fps: 30, total: 6, voice: null, music: null, kicker: 'READ THIS FIRST', niche: 'salon',
+  brand: { name: 'Stolen Valour', url: 'stolenvalour.co.za', contact: 'WhatsApp 065 027 6518', accent: '#14213D' },
+  segs: [{ kind: 'hook', show: 'Your website is losing you *clients*', say: 'Your website is losing you clients', start: 0.04, end: 5, words: [], scene: 'kinetic', mood: 'neg', clip: null }],
 };
 
 export const Root: React.FC = () => (
