@@ -43,6 +43,36 @@ def tts(texts, voice, lang):
     return res
 
 
+def tts_chatterbox(texts):
+    """Chatterbox (MIT, Resemble AI): far more human than Kokoro. Word times come from Whisper on the real audio."""
+    global SR
+    import torch
+    from chatterbox.tts import ChatterboxTTS
+    from faster_whisper import WhisperModel
+    torch.manual_seed(7)
+    m = ChatterboxTTS.from_pretrained(device="cpu")
+    SR = m.sr
+    wm = WhisperModel("base.en", device="cpu", compute_type="int8")
+    res = []
+    for t in texts:
+        wav = m.generate(speakable(t), exaggeration=0.62, cfg_weight=0.42, temperature=0.75)
+        a = wav.squeeze().detach().cpu().numpy().astype(np.float32)
+        a = a / (np.max(np.abs(a)) + 1e-9) * 0.95
+        tmp = ROOT / "tmp" / "seg.wav"; tmp.parent.mkdir(exist_ok=True); sf.write(tmp, a, SR)
+        segs, _ = wm.transcribe(str(tmp), word_timestamps=True, language="en", beam_size=1)
+        words = [(w.start, w.end) for s in segs for w in (s.words or [])]
+        res.append((a, words))
+    return res
+
+
+def tts_any(texts, brand):
+    try:
+        out = tts_chatterbox(texts); print("voice: chatterbox"); return out
+    except Exception as e:
+        print("chatterbox unavailable, falling back to kokoro:", repr(e)[:300])
+        return tts(texts, brand.get("voice", "af_heart"), brand.get("lang", "a"))
+
+
 def align(display, spoken, start, dur):
     """Times for the words as written: token timings when counts match, else spread by character length."""
     ws = display.split()
@@ -90,10 +120,12 @@ def main():
 
     segs_src = [("hook", s["hook"])] + [("line", x) for x in s["lines"]] + [("cta", s["cta"])]
     devices = ["phone", "laptop", "full", "phone"]
-    voice_on = not a.no_voice
+    voice_on = not a.no_voice and os.environ.get("FORMAT") != "music"
+    if not a.id and slot == 2:
+        voice_on = False  # every evening reel is a music-only edit
     segs, t = [], LEAD
     if voice_on:
-        audio = tts([g["say"] for _, g in segs_src], brand.get("voice", "af_heart"), brand.get("lang", "a"))
+        audio = tts_any([g["say"] for _, g in segs_src], brand)
         chunks = [np.zeros(int(LEAD * SR), np.float32)]
     for i, (kind, g) in enumerate(segs_src):
         dev = "full" if kind in ("hook", "cta") else devices[(i - 1) % len(devices)]
@@ -101,15 +133,18 @@ def main():
             au, spoken = audio[i]; d = len(au) / SR
             chunks += [au, np.zeros(int(GAP * SR), np.float32)]
         else:
-            spoken, d = [], max(2.2, 0.36 * len(g["say"].split()))
+            spoken, d = [], max(1.9, 0.42 * len(g["show"].split()) + 0.9)
         c = clip(dev)
         a0, a1 = man.get(c, [0, 0]) if c else (0, 0)
         frm = rnd.randint(a0, max(a0, a1 - int((d + GAP) * 30)))
         segs.append({"kind": kind, "show": g["show"], "say": g["say"], "start": round(t, 3), "end": round(t + d, 3),
-                     "words": align(g["say"], spoken, t, d), "device": dev, "clip": ("clips/" + c) if c else None, "clipFrom": frm})
+                     "words": align(g["say"], spoken, t, d), "device": dev, "clip": ("clips/" + c) if c else None, "clipFrom": frm, "n": i if kind == "line" else 0})
         t += d + GAP
     total = round(t + TAIL, 3)
-    props = {"fps": 30, "total": total, "voice": None, "music": None, "segs": segs,
+    kick = {"pain": "STOP SCROLLING", "value": "READ THIS FIRST", "niche": "OWNERS, WATCH THIS"}.get(s.get("pillar"), "STOP SCROLLING")
+    wa = "whatsapp" in s["cta"]["say"].lower() and "dm" not in s["cta"]["say"].lower().split()
+    props = {"fps": 30, "total": total, "voice": None, "music": None, "segs": segs, "kicker": kick,
+             "cta": {"channel": "whatsapp" if wa else "dm", "text": "Hi, I'd like a free mock-up" if wa else "SITE"},
              "brand": {"name": brand["name"], "url": brand["url"], "contact": brand.get("contact_short", "WhatsApp 065 027 6518"), "accent": brand.get("accent", "#B8F2D6")}}
     if voice_on:
         v = np.concatenate(chunks); v = v / (np.max(np.abs(v)) + 1e-9) * 0.92

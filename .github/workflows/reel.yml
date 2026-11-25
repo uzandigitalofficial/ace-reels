@@ -49,7 +49,7 @@ jobs:
         run: |
           (cd reel && npm ci --no-audit --no-fund && npx remotion browser ensure)
           sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg >/dev/null
-          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -q -r requirements.txt
           python -m playwright install --with-deps chromium >/dev/null
       - name: Render
