@@ -31,3 +31,13 @@ Ranked, highest value first. One item per night. Each line: the change, then how
 - [ ] 3D hero shots via Blender (Uwais asked: "What if we used Astra in blender..."): render a website-on-laptop or phone turn once on the laptop, cache as a short clip in assets/3d/, use as one scene type. Never render Blender inside the daily Action. Verify: one test reel with the clip, qa PASS, looks premium against rules.md.
 - [ ] Sound design that never sounds cheap: at most 3 subtle real foley hits per reel (paper, pen, soft click), low level under the voice, no stock bleeps. Verify: by ear on the preview and voice still clearly on top.
 - [ ] Later, after Instagram posting is stable: reformat each reel for YouTube Shorts and TikTok with its own hook, caption and cover text.
+
+## From the reels Uwais sent, 25 Nov evening (captions read in full)
+- [ ] Hook bank: for every script write 10 first-3-second openings and keep the strongest (jayantcreates.ai "5 pillars"). Verify: hook line in the first 1.5 s is a question or a sharp claim, not a label.
+- [ ] Story over facts: scripts create a feeling and tell a small story (a dealer losing a buyer at 9pm), not a list of features (pierredelcourr "strong vs weak brands"). Verify: each script has one person, one moment, one result.
+- [ ] Humanizer pass on every script: strip anything that sounds machine-written; plain South African English, contractions, no filler. Verify: read aloud by voice check, no stock phrases.
+- [ ] Learn from retention once Instagram insights are connected: rank last week's reels by views and watch time, write more like the top two (buildwithakhil.ai, jayantcreates.ai). Needs an Instagram insights connection; until then use likes and DMs as the signal.
+- [ ] Trial reels: when Instagram's trial reels are available through the posting route, post 2 hook variants to non-followers and keep the winner (jayantcreates.ai pillar 5).
+- [ ] Look at free tools named in the reels for the QA step: Earshot (Claude listens to the video) and Video Director (checks a video before posting), from cooper.simson's list; adopt only if open source, free and better than render/qa.py.
+- [ ] Motion graphics: compare the free "PYNK" motion skill and Huashu Motion against our Remotion scenes for premium title cards; borrow ideas, keep our cream and navy rules.
+- [ ] 3D shots: the espresso reel Uwais liked (alokxmehta) was a prompt run in Claude Opus 5.5 and GPT-6 Astra, not Blender; holcdenis and winkguys show Claude-made 3D with no Blender. Try a code-made 3D phone or laptop turn (three.js inside Remotion) before any Blender work.
