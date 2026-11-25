@@ -12,6 +12,9 @@ on:
       post:
         description: 'Post to Instagram (yes/no)'
         default: 'yes'
+      force:
+        description: 'Render even if no slot is owed (yes/no)'
+        default: 'no'
 permissions:
   contents: write
 concurrency:
@@ -27,25 +30,26 @@ jobs:
         id: due
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && (github.event.inputs.post == 'no' || github.event.inputs.id != '' || github.event.inputs.force == 'yes') }}
         run: python publish/due.py | tee -a "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         with:
           python-version: '3.11'
           cache: pip
       - uses: actions/cache@v4
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         with:
           path: ~/.cache/huggingface
           key: kokoro-v1
       - uses: actions/setup-node@v4
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         with:
           node-version: '20'
           cache: npm
           cache-dependency-path: reel/package-lock.json
       - name: Install
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         run: |
           (cd reel && npm ci --no-audit --no-fund && npx remotion browser ensure)
           sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg >/dev/null
@@ -53,18 +57,18 @@ jobs:
           pip install -q -r requirements.txt
           python -m playwright install --with-deps chromium >/dev/null
       - name: Render
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         env:
           SLOT: ${{ steps.due.outputs.slot }}
           REEL_TEST: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.post == 'no' }}
         run: python render/render5.py --brand stolenvalour ${{ github.event.inputs.id && format('--id {0}', github.event.inputs.id) || '' }}
       - name: Publish to gallery
-        if: steps.due.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+        if: steps.due.outputs.run == 'yes'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash publish/pages.sh
       - name: Post to Instagram
-        if: (steps.due.outputs.run == 'yes' && github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch' && github.event.inputs.post != 'no')
+        if: steps.due.outputs.run == 'yes' && (github.event_name == 'schedule' || github.event.inputs.post != 'no')
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
