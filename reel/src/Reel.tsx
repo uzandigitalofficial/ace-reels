@@ -61,7 +61,7 @@ const Scene: React.FC<{ s: Seg; p: ReelProps; len: number; idx: number }> = ({ s
   return (
     <AbsoluteFill style={{ transform: `translateX(${(1 - whip) * dir * 420}px) scale(${1 + (1 - whip) * 0.08})`, filter: `blur(${(1 - whip) * 26}px)` }}>
       {clip ? (
-        <AbsoluteFill style={{ transform: `scale(${(full ? 1.22 : 1.3) * push}) translateY(${Math.sin(f / 40) * 12}px)`, filter: full ? 'brightness(.46) saturate(1.2) blur(7px)' : 'blur(36px) brightness(.42) saturate(1.4)' }}>
+        <AbsoluteFill style={{ transform: `scale(${(full ? 1.22 : 1.3) * push}) translateY(${Math.sin(f / 40) * 12}px)`, filter: full ? 'brightness(.36) saturate(1.2) blur(16px)' : 'blur(36px) brightness(.42) saturate(1.4)' }}>
           <OffthreadVideo src={clip} startFrom={from} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </AbsoluteFill>
       ) : null}
@@ -91,7 +91,7 @@ const Num: React.FC<{ n: number; f: number; accent: string; top: boolean }> = ({
   const { fps } = useVideoConfig();
   const a = spring({ frame: f, fps, config: { damping: 14, stiffness: 160 } });
   return (
-    <div style={{ position: 'absolute', top: top ? 150 : 520, left: 70, fontWeight: 900, fontSize: 150, lineHeight: 1, color: 'transparent', WebkitTextStroke: `3px ${accent}`, opacity: 0.9 * a, transform: `translateX(${(1 - a) * -120}px) rotate(${(1 - a) * -12}deg)` }}>{String(n).padStart(2, '0')}</div>
+    <div style={{ position: 'absolute', top: top ? 165 : 470, left: 0, width: '100%', textAlign: 'center', fontWeight: 900, fontSize: top ? 96 : 130, lineHeight: 1, color: 'transparent', WebkitTextStroke: `3px ${accent}`, opacity: 0.9 * a, transform: `translateY(${(1 - a) * -60}px) scale(${0.7 + 0.3 * a})` }}>{String(n).padStart(2, '0')}</div>
   );
 };
 
@@ -136,7 +136,7 @@ const Headline: React.FC<{ s: Seg; p: ReelProps; f: number; top: boolean }> = ({
   const hook = s.kind === 'hook';
   const size = top ? 78 : s.show.length > 28 ? 112 : 132;
   return (
-    <AbsoluteFill style={{ justifyContent: top ? 'flex-start' : 'center', alignItems: 'center', padding: top ? '250px 70px 0' : '0 70px 240px', transform: `translateY(${Math.sin(f / 22) * 5}px)` }}>
+    <AbsoluteFill style={{ justifyContent: top ? 'flex-start' : 'center', alignItems: 'center', padding: top ? '290px 70px 0' : '120px 70px 240px', transform: `translateY(${Math.sin(f / 22) * 5}px)` }}>
       <div style={{ textAlign: 'center', fontSize: size, lineHeight: 0.98, letterSpacing: '-0.04em', color: '#fff', textShadow: '0 10px 50px rgba(0,0,0,.55)' }}>
         {words.map((w, k) => {
           const sp = spring({ frame: f - 2 - k * (hook ? 4 : 3), fps, config: { damping: 13, stiffness: 190, mass: 0.6 } });
