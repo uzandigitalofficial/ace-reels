@@ -1,0 +1,22 @@
+name: ig-token-refresh
+# Instagram long-lived tokens last 60 days. This extends it every Monday.
+# If a GH_PAT secret (fine-grained, this repo, Secrets: read and write) exists, the refreshed token is saved back automatically.
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$IG_TOKEN" ]; then echo "no IG_TOKEN yet"; exit 0; fi
+          NEW=$(curl -fsS "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=$IG_TOKEN" | python -c "import sys,json;print(json.load(sys.stdin).get('access_token',''))")
+          if [ -z "$NEW" ]; then echo "refresh failed"; exit 1; fi
+          echo "::add-mask::$NEW"
+          if [ -n "$GH_PAT" ]; then echo "$NEW" | GH_TOKEN="$GH_PAT" gh secret set IG_TOKEN --repo "$GH_REPO"; echo "token refreshed and saved"; else echo "token extended (no GH_PAT, not saved)"; fi
