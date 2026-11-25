@@ -87,9 +87,9 @@ window.renderAt=t=>{
   b.style.fontSize=(isH?128:site?80:104)+'px';b.style.top=(site?400:isH?820:860)+'px';
   [...b.children].forEach((w,k)=>{const p=E((lt+.12-k*.065)/.5);w.style.opacity=p*(1-ex);
     w.style.transform=`translateY(${(1-p)*46-ex*24}px)`;w.style.filter=`blur(${(1-p)*14+ex*8}px)`});
-  let tag='';if(C.visual==='compare'&&!isH&&!isC)tag=i===1?'THE OLD WAY':'THE BETTER WAY';if(isH&&C.kicker)tag=C.kicker;
+  let tag='';if(isH&&C.kicker)tag=C.kicker;
   const tg=$('tag'),bh=b.getBoundingClientRect();tg.textContent=tag;tg.style.top=(bh.top-72)+'px';tg.style.opacity=isC?0:E(lt/.5)*(1-ex);
-  const st=$('strike');if(C.visual==='compare'&&i===1){const sp=E((lt-dur*.55)/.5);st.style.display='block';
+  const st=$('strike');if(false){const sp=E((lt-dur*.55)/.5);st.style.display='block';
     st.style.left=(bh.left+30)+'px';st.style.width=(bh.width-60)+'px';st.style.top=(bh.top+bh.height/2)+'px';
     st.style.transform=`scaleX(${sp})`;st.style.opacity=1-ex}else st.style.display='none';
   const sw=[...$('sub').children],kk=Math.floor(sw.length*Math.min(1,lt/dur)+.5);sw.forEach((w,j)=>w.className=j<kk?'on':'');
