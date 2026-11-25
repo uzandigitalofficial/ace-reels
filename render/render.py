@@ -14,7 +14,7 @@ def pick(bank, override):
         return next(s for s in bank if s["id"] == override)
     now = datetime.datetime.now(datetime.timezone.utc)
     day = (now.date() - datetime.date(2026, 11, 25)).days
-    slot = 0 if now.hour < 8 else 1 if now.hour < 14 else 2
+    slot = int(os.environ.get("SLOT") or (0 if now.hour < 8 else 1 if now.hour < 14 else 2)) % 3
     return bank[(day * 3 + slot) % len(bank)], day, slot
 
 
