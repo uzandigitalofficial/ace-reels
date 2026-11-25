@@ -1,7 +1,7 @@
 {
  "_note": "Usable frame windows (30 fps) per clip, checked on contact sheets 25 Nov 2026 (capture v2, 12 s each). A value is [from, to] or a list of [from, to] windows; dark chapter transitions are left out. Only listed clips are used.",
- "obsidian-mobile.mp4": [[0, 150], [180, 360]],
- "obsidian-desktop.mp4": [[0, 150], [180, 360]],
+ "obsidian-mobile.mp4": [[0, 150], [175, 235]],
+ "obsidian-desktop.mp4": [[0, 150], [175, 300]],
  "stolenvalour-mobile.mp4": [0, 360],
  "stolenvalour-desktop.mp4": [0, 265],
  "saxonwold-mobile.mp4": [0, 360],
