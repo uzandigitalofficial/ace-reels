@@ -3,146 +3,84 @@
   {
    "id": "V1",
    "file": "voice/V1.mp3",
-   "engine": "Microsoft Ava Multilingual (edge-tts)",
-   "line": "US, warm and expressive, the most natural Microsoft voice. Free, no key, runs anywhere.",
-   "raw": "edge_ava_multi.mp3",
-   "lufs": -16.0,
-   "secs": 9.3
+   "engine": "Microsoft Ava Multilingual",
+   "line": "American, warm and natural. Our top pick for a real, human feel.",
+   "tts": {
+    "engine": "edge",
+    "voice": "en-US-AvaMultilingualNeural",
+    "rate": "-4%"
+   },
+   "lufs": -16.1,
+   "secs": 16.0
   },
   {
    "id": "V2",
    "file": "voice/V2.mp3",
-   "engine": "Microsoft Emma Multilingual (edge-tts)",
-   "line": "US, bright, clear and chatty. Free, no key.",
-   "raw": "edge_emma_multi.mp3",
-   "lufs": -16.3,
-   "secs": 9.6
+   "engine": "Microsoft Emma Multilingual",
+   "line": "American, bright and chatty. A little younger and quicker.",
+   "tts": {
+    "engine": "edge",
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-4%"
+   },
+   "lufs": -16.0,
+   "secs": 16.7
   },
   {
    "id": "V3",
    "file": "voice/V3.mp3",
-   "engine": "Microsoft Ava (edge-tts)",
-   "line": "Same speaker as V1, older model, a touch flatter.",
-   "raw": "edge_ava.mp3",
-   "lufs": -16.1,
-   "secs": 9.0
+   "engine": "Microsoft Sonia",
+   "line": "British, polished and calm. Premium and measured.",
+   "tts": {
+    "engine": "edge",
+    "voice": "en-GB-SoniaNeural",
+    "rate": "-4%"
+   },
+   "lufs": -16.0,
+   "secs": 17.3
   },
   {
    "id": "V4",
    "file": "voice/V4.mp3",
-   "engine": "Microsoft Jenny (edge-tts)",
-   "line": "US, friendly and even, classic assistant style.",
-   "raw": "edge_jenny.mp3",
-   "lufs": -16.1,
-   "secs": 10.8
+   "engine": "Microsoft Leah",
+   "line": "South African English. Sounds local to your dealers.",
+   "tts": {
+    "engine": "edge",
+    "voice": "en-ZA-LeahNeural",
+    "rate": "-4%"
+   },
+   "lufs": -16.0,
+   "secs": 18.9
   },
   {
    "id": "V5",
    "file": "voice/V5.mp3",
-   "engine": "Microsoft Aria (edge-tts)",
-   "line": "US, confident newsreader style.",
-   "raw": "edge_aria.mp3",
+   "engine": "Kokoro, Heart",
+   "line": "American, smooth and clean. Works today, no key and no extra setup.",
+   "tts": {
+    "engine": "kokoro",
+    "voice": "af_heart",
+    "lang": "a"
+   },
    "lufs": -16.1,
-   "secs": 11.3
+   "secs": 15.8
   },
   {
    "id": "V6",
    "file": "voice/V6.mp3",
-   "engine": "Microsoft Sonia (edge-tts)",
-   "line": "British, polished and calm.",
-   "raw": "edge_sonia_gb.mp3",
-   "lufs": -16.3,
-   "secs": 10.6
-  },
-  {
-   "id": "V7",
-   "file": "voice/V7.mp3",
-   "engine": "Microsoft Libby (edge-tts)",
-   "line": "British, soft and young.",
-   "raw": "edge_libby_gb.mp3",
-   "lufs": -16.3,
-   "secs": 11.9
-  },
-  {
-   "id": "V8",
-   "file": "voice/V8.mp3",
-   "engine": "Microsoft Leah (edge-tts)",
-   "line": "South African English, local accent.",
-   "raw": "edge_leah_za.mp3",
-   "lufs": -16.3,
-   "secs": 11.7
-  },
-  {
-   "id": "V9",
-   "file": "voice/V9.mp3",
-   "engine": "Chatterbox, current settings",
-   "line": "What the reels use now (exaggeration 0.62, cfg 0.42). For comparison.",
-   "raw": "cb_current.wav",
-   "lufs": -16.0,
-   "secs": 7.0
-  },
-  {
-   "id": "V10",
-   "file": "voice/V10.mp3",
-   "engine": "Chatterbox, calm",
-   "line": "Exaggeration 0.40, cfg 0.50: steadier, less sing-song.",
-   "raw": "cb_calm.wav",
+   "engine": "Chatterbox, calm settings",
+   "line": "The voice the reels use now, tuned steadier and less sing-song.",
+   "tts": {
+    "engine": "chatterbox",
+    "chatterbox": {
+     "exaggeration": 0.4,
+     "cfg_weight": 0.5,
+     "temperature": 0.7,
+     "seed": 7
+    }
+   },
    "lufs": -16.1,
-   "secs": 7.7
-  },
-  {
-   "id": "V11",
-   "file": "voice/V11.mp3",
-   "engine": "Chatterbox, warm and slow",
-   "line": "Exaggeration 0.30, cfg 0.30, temperature 0.60: slowest and softest Chatterbox.",
-   "raw": "cb_warm_slow.wav",
-   "lufs": -16.1,
-   "secs": 8.1
-  },
-  {
-   "id": "V12",
-   "file": "voice/V12.mp3",
-   "engine": "Chatterbox Turbo",
-   "line": "Resemble's newer, faster model with its built-in voice.",
-   "raw": "cb_turbo.wav",
-   "lufs": -16.3,
-   "secs": 9.0
-  },
-  {
-   "id": "V13",
-   "file": "voice/V13.mp3",
-   "engine": "Kokoro, Heart",
-   "line": "The current backup voice. Tiny, fast, clean, slightly smooth.",
-   "raw": "kokoro_af_heart.wav",
-   "lufs": -16.0,
-   "secs": 8.6
-  },
-  {
-   "id": "V14",
-   "file": "voice/V14.mp3",
-   "engine": "Kokoro, Bella",
-   "line": "Kokoro's other top US female voice, a bit brighter.",
-   "raw": "kokoro_af_bella.wav",
-   "lufs": -16.0,
-   "secs": 8.9
-  },
-  {
-   "id": "V15",
-   "file": "voice/V15.mp3",
-   "engine": "Kokoro, Nicole",
-   "line": "Breathy, close-mic, slow. Intimate, not for every reel.",
-   "raw": "kokoro_af_nicole.wav",
-   "lufs": -16.1,
-   "secs": 13.7
-  },
-  {
-   "id": "V16",
-   "file": "voice/V16.mp3",
-   "engine": "Kokoro, Emma (British)",
-   "line": "British Kokoro voice, crisp.",
-   "raw": "kokoro_bf_emma.wav",
-   "lufs": -16.1,
-   "secs": 8.0
+   "secs": 12.3
   }
  ],
  "music": [
@@ -151,12 +89,13 @@
    "file": "music/M1.mp3",
    "title": "Gymnopedie No 1",
    "artist": "Kevin MacLeod",
-   "line": "Satie's soft solo piano. About one note a second, calm and elegant.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Gymnopedie%20No%201.mp3",
+   "line": "Satie's soft solo piano. Calm, elegant, about one note a second.",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Gymnopedie%20No%201.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Gymnopedie No 1\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.0
+   "lufs": -16.1,
+   "secs": 28.0
   },
   {
    "id": "M2",
@@ -164,105 +103,64 @@
    "title": "Sincerely",
    "artist": "Kevin MacLeod",
    "line": "Slow, warm and low. Almost nothing in the voice range.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sincerely.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Sincerely\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.3
+   "lufs": -16.0,
+   "secs": 28.0
   },
   {
    "id": "M3",
    "file": "music/M3.mp3",
    "title": "Lightless Dawn",
    "artist": "Kevin MacLeod",
-   "line": "Very slow ambient piano and texture, reflective.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Lightless%20Dawn.mp3",
+   "line": "Very slow ambient piano and texture. Reflective.",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Lightless%20Dawn.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.0
+   "lufs": -16.0,
+   "secs": 28.0
   },
   {
    "id": "M4",
    "file": "music/M4.mp3",
    "title": "Windswept",
    "artist": "Kevin MacLeod",
-   "line": "Airy, even ambient bed with very steady level.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Windswept.mp3",
+   "line": "Airy, even ambient bed. Very steady level.",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Windswept.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Windswept\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.3
+   "lufs": -16.0,
+   "secs": 28.0
   },
   {
    "id": "M5",
    "file": "music/M5.mp3",
    "title": "Fresh Air",
    "artist": "Kevin MacLeod",
-   "line": "The sparsest track tested: long soft tones, hardly any attacks.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Fresh%20Air.mp3",
+   "line": "The sparsest bed: long soft tones, hardly any attacks.",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Fresh%20Air.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Fresh Air\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.3
+   "lufs": -16.0,
+   "secs": 28.0
   },
   {
    "id": "M6",
    "file": "music/M6.mp3",
    "title": "Perspectives",
    "artist": "Kevin MacLeod",
-   "line": "Gentle, even, slightly more motion. Keeps a reel moving.",
-   "source": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Perspectives.mp3",
+   "line": "Gentle and even, a little more motion. Keeps a reel moving.",
+   "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Perspectives.mp3",
    "page": "https://incompetech.com/music/royalty-free/music.html",
    "licence": "CC-BY 4.0",
    "attribution": "\"Perspectives\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/",
-   "lufs": -16.3
-  },
-  {
-   "id": "Sound design only",
-   "file": "music/M_sfx.mp3",
-   "title": "No music, sound design only (with V1)",
-   "line": "Soft whoosh in, page flip, a pop on the turn, a gentle riser and click into the call to action.",
-   "lufs": -16.1
-  },
-  {
-   "id": "No music",
-   "file": "music/M_none.mp3",
-   "title": "No music, voice only (V1)",
-   "line": "Just the voice. Clean and direct.",
-   "lufs": -16.1
+   "lufs": -16.0,
+   "secs": 28.0
   }
- ],
- "sfx": [],
- "mixes": [
-  {
-   "id": "MIX1",
-   "file": "mix/MIX1.mp3",
-   "voice": "V1",
-   "music": "M1",
-   "lufs": -16.1
-  },
-  {
-   "id": "MIX2",
-   "file": "mix/MIX2.mp3",
-   "voice": "V12",
-   "music": "M1",
-   "lufs": -16.4
-  },
-  {
-   "id": "MIX3",
-   "file": "mix/MIX3.mp3",
-   "voice": "V2",
-   "music": "M1",
-   "lufs": -16.3
-  }
- ],
- "sfx_sources": {
-  "whoosh": "synth",
-  "riser": "synth",
-  "paper": "sfx_dl/RPGsounds_Kenney__bookFlip2.ogg",
-  "paper2": "sfx_dl/book_flips_-_starninjas__book_flip.3.ogg",
-  "pop": "sfx/kenney_drop_002.wav",
-  "click": "sfx/kenney_click_001.wav"
- }
+ ]
 }

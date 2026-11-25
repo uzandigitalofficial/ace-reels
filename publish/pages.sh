@@ -11,6 +11,13 @@ fi
 mkdir -p site/reels
 cp out/* site/reels/
 ls -t site/reels/*.mp4 | tail -n +16 | while read -r f; do b="${f%.mp4}"; rm -f "$b.mp4" "$b.jpg" "$b.json"; done
+if [ -f picks/index.html ]; then  # the voice and music pick sheet: page, licences and final mp3s only, never picks/_raw
+  rm -rf site/picks && mkdir -p site/picks/voice site/picks/music
+  cp picks/index.html site/picks/
+  [ -f picks/LICENCES.md ] && cp picks/LICENCES.md site/picks/
+  cp picks/voice/*.mp3 site/picks/voice/
+  cp picks/music/*.mp3 site/picks/music/
+fi
 python publish/index.py site
 python publish/feed.py site
 touch site/.nojekyll
