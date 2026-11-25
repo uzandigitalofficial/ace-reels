@@ -1,0 +1,14 @@
+{
+  "name": "ace-reel",
+  "private": true,
+  "scripts": {
+    "render": "remotion render src/index.ts Reel"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.380",
+    "@remotion/google-fonts": "4.0.380",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.380"
+  }
+}

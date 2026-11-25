@@ -4,3 +4,8 @@ site/
 check/
 tmp_fix.py
 __pycache__/
+reel/node_modules/
+reel/public/
+capture/node_modules/
+assets/clips_old/
+assets/clips/timecut-temp-*/

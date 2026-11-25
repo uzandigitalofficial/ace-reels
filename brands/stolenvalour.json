@@ -2,8 +2,18 @@
  "name": "Stolen Valour",
  "url": "stolenvalour.co.za",
  "contact": "WHATSAPP 065 027 6518",
+ "contact_short": "WhatsApp 065 027 6518",
+ "accent": "#B8F2D6",
  "voice": "af_heart",
  "lang": "a",
+ "music": [
+  "https://assets.mixkit.co/music/744/744.mp3",
+  "https://assets.mixkit.co/music/770/770.mp3",
+  "https://assets.mixkit.co/music/162/162.mp3",
+  "https://assets.mixkit.co/music/160/160.mp3",
+  "https://assets.mixkit.co/music/161/161.mp3",
+  "https://assets.mixkit.co/music/130/130.mp3"
+ ],
  "shots": ["https://stolenvalour.co.za"],
  "colors": {"ink": "#f1ece2", "acc": "#9fd3bf", "acc2": "#cfc6b6"},
  "canvas": {"bg": "#07080b", "glow1": "rgba(24,96,74,.55)", "glow2": "rgba(214,204,186,.10)", "dot": "#d9efe6"}
