@@ -7,7 +7,7 @@ repo = os.environ.get("GITHUB_REPOSITORY", "uzandigitalofficial/ace-reels")
 owner, name = repo.split("/")
 base = f"https://{owner.lower()}.github.io/{name}/"
 items = [json.load(open(p, encoding="utf-8")) for p in glob.glob(os.path.join(site, "reels", "*.json"))]
-items = [m for m in items if m["made"][9:13] >= "0500"]  # skip overnight test renders
+items = [m for m in items if m.get("v", 1) >= 2]  # skip overnight test renders
 items.sort(key=lambda m: m["made"], reverse=True)
 out = []
 for m in items:

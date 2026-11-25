@@ -125,7 +125,7 @@ def main():
         pg.evaluate("c=>window.setup(c)", cfg)
         pg.wait_for_function("window.__ready===true", timeout=60000)
         ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", str(FPS), "-c:v", "mjpeg", "-i", "-",
-                               "-i", str(wav), "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", "-maxrate", "9M", "-bufsize", "18M", "-pix_fmt", "yuv420p",
+                               "-i", str(wav), "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", "-maxrate", "4500k", "-bufsize", "9000k", "-pix_fmt", "yuv420p",
                                "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-shortest", "-movflags", "+faststart", str(mp4)],
                               stdin=subprocess.PIPE)
         frames = int(total * FPS)
@@ -145,7 +145,7 @@ def main():
     base = f"https://{owner.lower()}.github.io/{rn}/reels/"
     caption = s["caption"].strip() + "\n\n" + " ".join(s.get("hashtags", []))
     meta = {"id": s["id"], "brand": a.brand, "file": mp4.name, "video_url": base + mp4.name, "cover_url": base + cover.name,
-            "caption": caption, "seconds": round(total, 1), "made": stamp}
+            "caption": caption, "v": 2, "seconds": round(total, 1), "made": stamp}
     (out / f"{name}.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(meta, ensure_ascii=False))
 
