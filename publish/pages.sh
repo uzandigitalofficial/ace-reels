@@ -12,6 +12,7 @@ mkdir -p site/reels
 cp out/* site/reels/
 ls -t site/reels/*.mp4 | tail -n +16 | while read -r f; do b="${f%.mp4}"; rm -f "$b.mp4" "$b.jpg" "$b.json"; done
 python publish/index.py site
+python publish/feed.py site
 touch site/.nojekyll
 cd site
 git init -q -b gh-pages
