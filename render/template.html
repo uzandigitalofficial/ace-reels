@@ -28,7 +28,7 @@ canvas{position:absolute;left:0;top:0}
 #cLine{top:890px;font:italic 500 62px/1.15 'Cormorant Garamond',serif;color:var(--acc2);padding:0 120px}
 #cUrl{top:1120px;font:600 30px Inter,sans-serif;letter-spacing:.3em;text-indent:.3em;color:var(--ink)}
 #cWa{top:1180px;font:500 27px Inter,sans-serif;letter-spacing:.2em;text-indent:.2em;color:var(--ink2)}
-#grain{mix-blend-mode:overlay;opacity:.45}
+#grain{mix-blend-mode:overlay;opacity:.32}
 </style></head><body>
 <canvas id="bg" width="1080" height="1920"></canvas>
 <canvas id="fx" width="1080" height="1920"></canvas>
@@ -73,7 +73,7 @@ window.renderAt=t=>{
   blob(bg,860+120*Math.sin(t*.17+1),1100+200*Math.cos(t*.12),700,K.glow1);
   const fx=$('fx').getContext('2d');fx.clearRect(0,0,1080,1920);
   const cp=isC?EIO((lt+.1)/1.3):0;
-  const cx=540,cy=1560-600*cp,R=660-300*cp,al=(site?.28:.55)+.2*cp;
+  const cx=540,cy=1560-600*cp,R=660-300*cp,al=(site?.32:.72)+.2*cp;
   const ay=t*.22,ax=.42,ca=Math.cos(ay),sa=Math.sin(ay),cb=Math.cos(ax),sbb=Math.sin(ax);
   fx.fillStyle=K.dot;
   for(const p of P){let x=p[0]*ca+p[2]*sa,z=-p[0]*sa+p[2]*ca,y=p[1]*cb-z*sbb;z=p[1]*sbb+z*cb;
@@ -101,6 +101,6 @@ window.renderAt=t=>{
   if(isC)[['cName',0],['cLine',.25],['cUrl',.5],['cWa',.65]].forEach(([id,d])=>{const p=E((lt-d)/.7),el=$(id);
     el.style.opacity=p;el.style.transform=`translateY(${(1-p)*40}px)`;el.style.filter=`blur(${(1-p)*10}px)`});
   $('bar').style.width=(900*Math.min(1,t/C.total))+'px';
-  $('grain').getContext('2d').drawImage(G[Math.floor(t*30)%6],0,0);
+  $('grain').getContext('2d').drawImage(G[Math.floor(t*15)%6],0,0);
 };
 </script></body></html>

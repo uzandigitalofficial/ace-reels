@@ -4,7 +4,7 @@
  "contact": "WHATSAPP 065 027 6518",
  "voice": "af_heart",
  "lang": "a",
- "shots": ["https://stolenvalour.co.za", "https://obsidian-crown.netlify.app"],
+ "shots": ["https://stolenvalour.co.za"],
  "colors": {"ink": "#f1ece2", "acc": "#9fd3bf", "acc2": "#cfc6b6"},
  "canvas": {"bg": "#07080b", "glow1": "rgba(24,96,74,.55)", "glow2": "rgba(214,204,186,.10)", "dot": "#d9efe6"}
 }

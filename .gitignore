@@ -1,4 +1,6 @@
 out/
 tmp/
 site/
+check/
+tmp_fix.py
 __pycache__/

@@ -125,7 +125,7 @@ def main():
         pg.evaluate("c=>window.setup(c)", cfg)
         pg.wait_for_function("window.__ready===true", timeout=60000)
         ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", str(FPS), "-c:v", "mjpeg", "-i", "-",
-                               "-i", str(wav), "-c:v", "libx264", "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yuv420p",
+                               "-i", str(wav), "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", "-maxrate", "9M", "-bufsize", "18M", "-pix_fmt", "yuv420p",
                                "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-shortest", "-movflags", "+faststart", str(mp4)],
                               stdin=subprocess.PIPE)
         frames = int(total * FPS)
