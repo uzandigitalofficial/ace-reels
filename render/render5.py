@@ -135,8 +135,12 @@ def main():
         else:
             spoken, d = [], max(1.9, 0.42 * len(g["show"].split()) + 0.9)
         c = clip(dev)
-        a0, a1 = man.get(c, [0, 0]) if c else (0, 0)
-        frm = rnd.randint(a0, max(a0, a1 - int((d + GAP) * 30)))
+        need = int((d + GAP) * 30)
+        wins = man.get(c, [0, 0]) if c else [0, 0]
+        wins = wins if wins and isinstance(wins[0], list) else [wins]  # [a, b] or [[a, b], [c, d], ...]
+        fit = [w for w in wins if w[1] - w[0] >= need] or [max(wins, key=lambda w: w[1] - w[0])]
+        a0, a1 = rnd.choice(fit)
+        frm = rnd.randint(a0, max(a0, a1 - need))
         segs.append({"kind": kind, "show": g["show"], "say": g["say"], "start": round(t, 3), "end": round(t + d, 3),
                      "words": align(g["say"], spoken, t, d), "device": dev, "clip": ("clips/" + c) if c else None, "clipFrom": frm, "n": i if kind == "line" else 0})
         t += d + GAP
