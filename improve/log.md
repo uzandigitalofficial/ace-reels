@@ -16,3 +16,13 @@ One dated entry per change: what changed, why, before and after numbers (render/
   sv-008 20261125-1651: PASS 95/100, 25.1 s, 3.92 Mbps, 161 wpm, silence 0.32 s, off palette 0 %, beats 75 % of 4 cuts
   sv-001 20261125-1656: PASS 100/100, 20.1 s, 3.89 Mbps, 161 wpm, silence 0.33 s, off palette 0 %, beats 100 % of 4 cuts
 - Sanity check of the palette detector: the old coral render tmp/final/20261125-1208-sv-092.mp4 fails with 17 % off palette.
+
+## 2026-11-26: clean scene exits (reel/src/Reel.tsx SceneWrap)
+- What: the outgoing scene's opacity now runs on frames (1 to 0 from len-4 to len+4) instead of on the eased slide value, which
+  kept it near full opacity for most of the 12 frame overlap. The slide and rotation are unchanged.
+- Why: in the last 3 posted reels (sv-003, sv-004, sv-005) the old headline sat on top of the new one during cuts; worst at
+  sv-004's CTA, where "Your domain, your name" covered "WhatsApp 065". The top backlog item (hook by frame 20) was already met.
+- Before (posted meta qa): sv-003 100, sv-004 100, sv-005 95 (avg 98.3), all PASS.
+- After (run 45893088746, sv-004 test 20261126-2050): PASS 100/100, 26.18 s, 3.71 Mbps, 160 wpm, silence 0.304 s, off palette 0 %,
+  beats 100 % of 4 cuts. Frames every 2 around the CTA cut: old scene fades away as the new headline lands, one faint frame left.
+- Note: standalone qa.py on a gh-pages mp4 without props flags polaroid footage as off palette (sv-004 at 13.8 s); added to backlog.

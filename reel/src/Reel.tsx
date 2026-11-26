@@ -60,8 +60,10 @@ const SceneWrap: React.FC<{ s: Seg; p: ReelProps; len: number; i: number; exit: 
   const Comp = SCENES[s.scene] || SCENES.kinetic;
   const e = exit ? interpolate(f, [len - 4, len + OVER], [0, 1], { ...clamp, easing: Easing.bezier(0.55, 0, 0.75, 0.2) }) : 0;
   const dir = i % 2 ? 1 : -1;
+  // fade on frames, not on the eased slide, so the old headline is gone before the new one lands (no ghost overlap)
+  const o = exit ? interpolate(f, [len - 4, len + 4], [1, 0], clamp) : 1;
   return (
-    <AbsoluteFill style={{ transform: `translate(${dir * 1150 * e}px, ${-40 * e}px) rotate(${dir * 7 * e}deg)`, opacity: interpolate(e, [0, 0.55], [1, 0], clamp) }}>
+    <AbsoluteFill style={{ transform: `translate(${dir * 1150 * e}px, ${-40 * e}px) rotate(${dir * 7 * e}deg)`, opacity: o }}>
       <Comp c={{ s, p, len, i }} />
     </AbsoluteFill>
   );
