@@ -1,11 +1,12 @@
-# Improvement backlog
+﻿# Improvement backlog
 
 Ranked, highest value first. One item per night. Each line: the change, then how to verify it. Mark done items like
 `- [x] (2026-11-26) ...`. Every change must keep improve/rules.md and pass render/qa.py on sv-092, sv-008 and sv-001.
 
 - [x] (2026-11-25) Beat-synced cuts and accents: scene cuts snap to a beat within 0.12 s of the voice cue, stamps, ticks, pops, underlines, cursor and progress line land on beats. Verify: qa beat_pct and the "beats:" log line.
 - [x] (2026-11-25) Automatic scorecard render/qa.py wired into render5.py; hard fail keeps a reel off the feed. Verify: "qa:" line in the Actions log, meta json "qa".
-- [ ] Better hook in the first 1.5 s: headline words land by frame 20 and the kicker pill on the first beat. Verify: still at 0.5 s and 1.5 s on the contact sheet shows the full hook; qa motion stays 20.
+- [x] (2026-11-26) Clean scene exits: the outgoing scene fades out over 8 frames (len-4 to len+4) instead of on the eased slide, so the old headline is gone before the new one lands (sv-004 CTA showed "Your domain" over "WhatsApp 065"). Verify: frames every 2 around each cut.
+- [ ] Better hook in the first 1.5 s (checked 2026-11-26 on sv-003/004/005: headline already full by frame 20, kicker pill visible by frame 5; only the case file accent word is borderline): headline words land by frame 20 and the kicker pill on the first beat. Verify: still at 0.5 s and 1.5 s on the contact sheet shows the full hook; qa motion stays 20.
 - [ ] Smoother easing on card entries: try a slightly softer drop spring (damping 15, stiffness 110) and compare overshoot. Verify: frame-by-frame sheet at 10 fps over the first 20 frames of a checklist scene shows no jump bigger than 40 px between frames.
 - [ ] Kinetic emphasis on prices: R2,000 and R5,000 get a short underline swash and a beat-timed scale pulse after the slam. Verify: sv-008 price scene stills; qa off palette stays 0.
 - [ ] Varied scene types so reels do not repeat: render/scenes.py avoids the same scene twice in a row and the same opener three reels running. Verify: count scenes over 9 consecutive rotation picks; qa scenes item at 20 for all three previews.
@@ -25,6 +26,7 @@ Ranked, highest value first. One item per night. Each line: the change, then how
 - [ ] Price card alignment: the "a month" serif baseline sits on the price baseline. Verify: zoomed still of sv-008 price scene.
 - [ ] Icon grid: only show icons that match the words, fill the rest with one big explanatory icon. Verify: icon scene stills read as one idea.
 - [ ] qa.py: add a loudness check (voice integrated loudness between -18 and -12 LUFS on the final mix). Verify: qa json "lufs" on three previews.
+- [ ] qa.py standalone runs: when no props.json sits next to the mp4, read segs from the meta json (or skip footage seconds) so polaroid footage is not reported as off palette (sv-004 gave a false hard fail at 13.8 s). Verify: qa on the gh-pages sv-004 mp4 passes with no props.
 - [ ] qa.py: flag text smaller than 22 px at 1080 width as a soft penalty. Verify: soft item appears, score unchanged on current previews.
 
 ## From Uwais's Instagram shares, 25 Nov (see briefs/ig-ideas-25nov.md)
