@@ -1,0 +1,40 @@
+{
+ "id": "sv-007",
+ "brand": "stolenvalour",
+ "file": "20261127-0546-sv-007.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-0546-sv-007.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-0546-sv-007.jpg",
+ "caption": "A printed price list goes stale, and reprinting costs time and money. A website lets you change a price and shows the new one on the page. WhatsApp 065 027 6518 for a free mock-up, no obligation.\n\n#smallbusinesssa #pricelist #southafricanbusiness #websitedesignsa #localbusinesssa #smallbusinessowner #stolenvalour #websitedesign #whatsappbusiness",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 23.463,
+ "made": "20261127-0546",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.333,
+ "beat_cuts": 0.75,
+ "music_from": 119.606,
+ "qa": {
+  "file": "20261127-0546-sv-007.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 95,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 19.9,
+   "beats": 15.0
+  },
+  "seconds": 23.51,
+  "mbps": 3.76,
+  "wpm": 160,
+  "longest_silence": 0.333,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 1,
+  "beat_pct": 75,
+  "cuts": 4,
+  "notes": []
+ }
+}

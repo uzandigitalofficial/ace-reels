@@ -1,0 +1,40 @@
+{
+ "id": "sv-009",
+ "brand": "stolenvalour",
+ "file": "20261127-1645-sv-009.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-1645-sv-009.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-1645-sv-009.jpg",
+ "caption": "A nail client decides from her phone, in seconds. A clear site with your services, prices and a WhatsApp button makes the next step easy. WhatsApp 065 027 6518 for a free mock-up, no obligation.\n\n#nailbarsa #nailssa #nailtechsa #beautysa #smallbusinesssa #websitedesignsa #southafricanbusiness #stolenvalour #joburgbeauty",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 22.619,
+ "made": "20261127-1645",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.342,
+ "beat_cuts": 1.0,
+ "music_from": 201.99,
+ "qa": {
+  "file": "20261127-1645-sv-009.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 100,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 20.0,
+   "beats": 20.0
+  },
+  "seconds": 22.68,
+  "mbps": 3.74,
+  "wpm": 165,
+  "longest_silence": 0.342,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 0,
+  "beat_pct": 100,
+  "cuts": 4,
+  "notes": []
+ }
+}

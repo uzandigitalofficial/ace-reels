@@ -1,0 +1,40 @@
+{
+ "id": "sv-003",
+ "brand": "stolenvalour",
+ "file": "20261125-1848-sv-003.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261125-1848-sv-003.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261125-1848-sv-003.jpg",
+ "caption": "A Facebook page shows your spa, but it does not feel like your spa. A proper site lays out treatments, prices and booking in one clear place. DM us on Instagram for a free homepage mock-up, no obligation.\n\n#spasouthafrica #spadaysa #spasa #beautysa #smallbusinesssa #joburgspa #websitedesignsa #southafricanbusiness #stolenvalour",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 23.426,
+ "made": "20261125-1848",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.307,
+ "beat_cuts": 1.0,
+ "music_from": 117.748,
+ "qa": {
+  "file": "20261125-1848-sv-003.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 100,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 19.7,
+   "beats": 20.0
+  },
+  "seconds": 23.49,
+  "mbps": 3.99,
+  "wpm": 165,
+  "longest_silence": 0.307,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 2,
+  "beat_pct": 100,
+  "cuts": 4,
+  "notes": []
+ }
+}

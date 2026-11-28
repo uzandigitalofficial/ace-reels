@@ -1,0 +1,40 @@
+{
+ "id": "sv-008",
+ "brand": "stolenvalour",
+ "file": "20261127-1045-sv-008.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-1045-sv-008.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261127-1045-sv-008.jpg",
+ "caption": "Paying for every small change adds up, and a monthly plan keeps it predictable. The studio plan is R2,000 a month with hosting and up to 5 changes included. DM us on Instagram for a free homepage mock-up, no obligation.\n\n#smallbusinesssa #websitedesignsa #monthlyplan #southafricanbusiness #localbusinesssa #smallbusinessowner #stolenvalour #websitedesign #joburgbusiness",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 25.526,
+ "made": "20261127-1045",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.309,
+ "beat_cuts": 0.75,
+ "music_from": 89.374,
+ "qa": {
+  "file": "20261127-1045-sv-008.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 95,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 19.9,
+   "beats": 15.0
+  },
+  "seconds": 25.58,
+  "mbps": 3.97,
+  "wpm": 157,
+  "longest_silence": 0.309,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 1,
+  "beat_pct": 75,
+  "cuts": 4,
+  "notes": []
+ }
+}

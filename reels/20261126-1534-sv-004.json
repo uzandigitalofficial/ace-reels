@@ -1,0 +1,40 @@
+{
+ "id": "sv-004",
+ "brand": "stolenvalour",
+ "file": "20261126-1534-sv-004.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261126-1534-sv-004.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261126-1534-sv-004.jpg",
+ "caption": "Facebook is useful for posts, but it is a poor shop window for your business. A site of your own holds your details in one place, under a domain you own. WhatsApp 065 027 6518 for a free mock-up, no obligation.\n\n#facebookbusiness #smallbusinesssa #websitedesignsa #southafricanbusiness #localbusinesssa #smallbusinessowner #digitalmarketingsa #stolenvalour #websitedesign",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 26.127,
+ "made": "20261126-1534",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.304,
+ "beat_cuts": 1.0,
+ "music_from": 26.122,
+ "qa": {
+  "file": "20261126-1534-sv-004.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 100,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 19.9,
+   "beats": 20.0
+  },
+  "seconds": 26.18,
+  "mbps": 3.78,
+  "wpm": 161,
+  "longest_silence": 0.304,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 1,
+  "beat_pct": 100,
+  "cuts": 4,
+  "notes": []
+ }
+}

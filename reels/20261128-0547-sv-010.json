@@ -1,0 +1,40 @@
+{
+ "id": "sv-010",
+ "brand": "stolenvalour",
+ "file": "20261128-0547-sv-010.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261128-0547-sv-010.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261128-0547-sv-010.jpg",
+ "caption": "Owners often find out late that the domain and the site were never theirs. A studio plan puts the domain in your name from day one, with hosting included. DM us on Instagram for a free homepage mock-up, no obligation.\n\n#smallbusinesssa #domainname #southafricanbusiness #websitedesignsa #localbusinesssa #smallbusinessowner #stolenvalour #websitedesign #digitalbusinesssa",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 22.531,
+ "made": "20261128-0547",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.304,
+ "beat_cuts": 1.0,
+ "music_from": 245.923,
+ "qa": {
+  "file": "20261128-0547-sv-010.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 100,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 20.0,
+   "beats": 20.0
+  },
+  "seconds": 22.59,
+  "mbps": 3.73,
+  "wpm": 164,
+  "longest_silence": 0.304,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 0,
+  "beat_pct": 100,
+  "cuts": 4,
+  "notes": []
+ }
+}

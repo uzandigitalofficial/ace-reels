@@ -1,0 +1,40 @@
+{
+ "id": "sv-011",
+ "brand": "stolenvalour",
+ "file": "20261128-1047-sv-011.mp4",
+ "video_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261128-1047-sv-011.mp4",
+ "cover_url": "https://uzandigitalofficial.github.io/ace-reels/reels/20261128-1047-sv-011.jpg",
+ "caption": "No setup fee, no minimum term, and a monthly plan you can stop with one month's notice. Studio sites are R2,000 a month and showroom sites are R5,000 a month. WhatsApp 065 027 6518 for a free mock-up.\n\n#smallbusinesssa #websitedesignsa #monthlyplan #southafricanbusiness #localbusinesssa #smallbusinessowner #stolenvalour #websitedesign #joburgbusiness",
+ "v": 2,
+ "engine": 6.1,
+ "test": false,
+ "seconds": 22.878,
+ "made": "20261128-1047",
+ "music_credit": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0. http://creativecommons.org/licenses/by/4.0/",
+ "voice_longest_silence": 0.327,
+ "beat_cuts": 1.0,
+ "music_from": 85.449,
+ "qa": {
+  "file": "20261128-1047-sv-011.mp4",
+  "pass": true,
+  "hard": [],
+  "score": 100,
+  "soft": {
+   "wpm": 20,
+   "scenes": 20.0,
+   "motion": 20.0,
+   "margins": 20.0,
+   "beats": 20.0
+  },
+  "seconds": 22.95,
+  "mbps": 3.73,
+  "wpm": 157,
+  "longest_silence": 0.327,
+  "off_palette_pct": 0.0,
+  "still_seconds": [],
+  "margin_frames": 0,
+  "beat_pct": 100,
+  "cuts": 4,
+  "notes": []
+ }
+}
